@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <link rel="shortcut icon" type="image/png" href="favicon32.ico">
+
+        <title>favico.js - Make a use of your favicon</title>
+        <meta property="og:title" content="favico.js"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://lab.ejci.net/favico.js/"/>
+        <meta property="og:description" content="Make a use of your favicon with badges, images or videos"/>
+        <meta property="og:image" content="http://lab.ejci.net/favico.js/og-image-app.png"/>
+        <meta property="og:image:type" content="image/png"/>
+        <meta property="og:image:width" content="160"/>
+        <meta property="og:image:height" content="98"/>
+        <!--link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="stylesheet"-->
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+        <![endif]-->
+        <link href="style.css" rel="stylesheet">
+    </head>
+
+    <body>
+
+        <div class="navbar-wrapper">
+            <div class="container">
+
+                <div class="navbar navbar-inverse navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="#">favicon.js</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="https://bitbucket.org/miroslavmagda/favico.js/src">Source</a>
+                                </li>
+                                <li>
+                                    <a href="https://bitbucket.org/miroslavmagda/favico.js/issues">Issues</a>
+                                </li>
+                                <li>
+                                    <a href="mailto:magda.miroslav@gmail.com">Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Carousel
+        ================================================== -->
+        <div id="myCarousel" class="carousel slide">
+            <!-- Indicators -->
+            <div class="carousel-inner">
+                <div class="item active">
+                    <div class="container">
+                        <div class="carousel-caption">
+                            <h1>favico.js</h1>
+                            <p><img id="badgeMirror" width="140" height="140" src="favicon140.ico"/>
+                            </p>
+                            <p>
+                                Make a use of your favicon with badges, images or videos
+                            </p>
+                            <p>
+                                <a class="btn btn-lg btn-success buttonBig" href="https://bitbucket.org/miroslavmagda/favico.js/src">Download source</small></a>
+                                <a class="btn btn-lg btn-warning buttonBig" href="https://bitbucket.org/miroslavmagda/favico.js/issues">Issues</a>
+                            </p>
+                            <p>
+                                <small>Try it:</small>
+                                <br />
+                                <button favicon-action="favicon|plus1|faviconMirror|plus1" class="btn btn-sm btn-primary favBadge">
+                                    &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                                </button>
+                                <button favicon-action="favicon|minus1|faviconMirror|minus1" class="btn btn-sm btn-primary favBadge">
+                                    &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                                </button>
+                                <button favicon-action="favicon|reset|faviconMirror|reset" class="btn btn-sm btn-primary favBadge">
+                                    Reset
+                                </button>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div><!-- /.carousel -->
+
+        <div class="container marketing">
+            <h3>Badges</h3>
+            <p>
+                Animate your favicon with animated badges. You can customize type of animation, background color and text color.
+            </p>
+            <div class="row">
+                <div class="col-lg-4">
+                    <h3>Slide animation</h3>
+                    <span class="browser"> <img id="badgeSlide" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconSlide|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconSlide|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconSlide|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    animation:'slide'
+});
+favicon.badge(1);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Fade animation</h3>
+                    <span class="browser"> <img id="badgeFade" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconFade|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconFade|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconFade|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    animation:'fade'
+});
+favicon.badge(2);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Pop animation</h3>
+                    <span class="browser"> <img id="badgePop" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconPop|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconPop|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconPop|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    animation:'pop'
+});
+favicon.badge(3);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Color settings</h3>
+                    <span class="browser"> <img id="badgeColor" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconColor|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconColor|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconColor|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    bgColor : '#5CB85C',
+    textColor : '#ff0',
+});
+favicon.badge(4);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Shape setting</h3>
+                    <span class="browser"> <img id="badgeShape" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconShape|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconShape|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconShape|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    type : 'rectangle',
+    animation: 'slide',
+});
+favicon.badge(5);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Attach to regular image</h3>
+                    <span class="browser"> <img id="badgeImage" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconImage|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconImage|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconImage|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    type : 'rectangle',
+    elementId : 'badgeImage'
+});
+favicon.badge(6);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+            </div>
+            <!-- /.row -->
+            <h3>Images / Video / Webcam</h3>
+            <p>
+                Create icon on the go from images, videos or event a webcam stream
+            </p>
+            <div class="row">
+                <div class="col-lg-4">
+                    <h3>Regular image to icon</h3>
+                    <p class="mkt">
+                        <img id="badgeImageIco" src="html5logo.png"/>
+                    </p>
+                    <p>
+                        <button favicon-action="badgeImageIco" class="btn btn-sm btn-default favImage">
+                            Set icon
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico();
+var image=document.getElementById('imageId');
+favicon.image(image);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Regular image to icon</h3>
+                    <p class="mkt">
+                        <video id="badgeVideoIco" width="300">
+                            <source src="chromeicon.mp4" type='video/mp4; codecs="avc1.42E01E, mp4a.40.2"' />
+                            <source src="chromeicon.webm" type='video/webm; codecs="vp8, vorbis"' />
+                            Video tag not supported. Download the video <a href="chromeicon.mp4">here</a>.
+                        </video>
+                    </p>
+                    <p>
+                        <button favicon-action="badgeVideoIco" class="btn btn-sm btn-default favVideo">
+                            Play video in icon
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico();
+var video=document.getElementById('videoId');
+favicon.video(video);
+//stop
+favicon.video('stop');
+</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Regular image to icon</h3>
+                    <p class="mkt">
+                        This is only for fun but it works :)
+                    </p>
+                    <p>
+                        <button favicon-action="badgeVideoIco" class="btn btn-sm btn-default favWebcam">
+                            Start webcam
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico();
+favicon.webcam();
+//stop
+favicon.webcam('stop');
+</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+            </div>
+            <hr>
+            <h4>Issues</h4>
+            <p>
+                <ul>
+                    <li>
+                        There is a problem if you are using icon that is on a different domain
+                    </li>
+                    <li>
+                        In Opera browser there are is some flickering :(
+                    </li>
+                    <li>
+                        Don't use images that are on different domains
+                    </li>                    
+                    <li>
+                        Video lagging (because of setTimeout)
+                    </li>
+                    <li>
+                        Webcam is only working on Chrome
+                    </li>
+                </ul>
+            </p>
+            <h4>License</h4>
+            <p>
+                All code is open source and dual licensed under <a href="http://www.gnu.org/licenses/gpl.html">GPL</a> and <a href="http://opensource.org/licenses/MIT">MIT</a>. Check the individual licenses for more information.
+            </p>
+            <hr>
+
+            <!-- FOOTER -->
+            <footer>
+                <p class="pull-right">
+                    <a href="#">Back to top</a>
+                </p>
+                <p>
+                    &copy; 2013 <a href="http://blog.ejci.net">Miroslav Magda</a>
+                </p>
+            </footer>
+
+        </div><!-- /.container -->
+
+        <!-- /container -->
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+
+        <script src="faviconAnimatio-0.0.1.min.js"></script>
+        <script src="example.js"></script>
+    </body>
+</html>
