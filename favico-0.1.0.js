@@ -1,7 +1,7 @@
 /**
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.0.1
+ * @version 0.1.0
  */
 var Favico = (function(opt) {'use strict';
     opt = (opt) ? opt : {};
@@ -16,8 +16,7 @@ var Favico = (function(opt) {'use strict';
     var _queue = [];
     _readyCb = function() {
     };
-    _ready = false;
-    _stop = false;
+    _ready = _stop = false;
     //merge initial options
     _opt = merge(_def, opt);
     _opt.bgColor = hexToRgb(_opt.bgColor);
@@ -41,7 +40,8 @@ var Favico = (function(opt) {'use strict';
                 icon.ready();
             };
             //:(
-            _stupidBrowser = (/firefox/i.test(navigator.userAgent.toLowerCase())) || (/opera/i.test(navigator.userAgent.toLowerCase()));
+            //_stupidBrowser = true;
+            // _stupidBrowser = (/firefox/i.test(navigator.userAgent.toLowerCase())) || (/opera/i.test(navigator.userAgent.toLowerCase()));
         } catch(e) {
             console.error('Error initializing favico...', e);
         }
@@ -328,7 +328,7 @@ var Favico = (function(opt) {'use strict';
      * @return DOMElement
      */
     fvi.setIcon = function(can) {
-        var url = can.toDataURL('image/x-icon');
+        var url = can.toDataURL('image/png');
         if (_opt.elementId) {
             document.getElementById(_opt.elementId).setAttribute('src', url);
         } else {
@@ -351,7 +351,7 @@ var Favico = (function(opt) {'use strict';
         } else {
             elm = fvi.get();
             if (elm == null) {
-                createElement();
+                fvi.create();
                 elm = fvi.get();
             }
         }
@@ -362,7 +362,6 @@ var Favico = (function(opt) {'use strict';
         var newElm;
         newElm = document.createElement('link');
         newElm.setAttribute('rel', 'icon');
-        newElm.setAttribute('type', 'image/x-icon');
         newElm.setAttribute('href', 'data:,');
         document.getElementsByTagName('head')[0].appendChild(newElm);
         return newElm;
@@ -631,6 +630,7 @@ var Favico = (function(opt) {'use strict';
         badge : badge,
         video : video,
         image : image,
-        webcam : webcam
+        webcam : webcam,
+        reset: icon.reset
     };
 });

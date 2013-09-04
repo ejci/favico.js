@@ -94,15 +94,19 @@ $(document).ready(function() {
         }
         isWebcam = !isWebcam;
     });
-    //var faviconImage = new Favico();
 
-    //var faviconVideo = new Favico();
     setTimeout(function() {
-        window.val_favicon = 7;
+        window.val_favicon = 1;
         window.favicon.badge(window.val_favicon);
-        window.val_faviconMirror = 7;
+        window.val_faviconMirror = 1;
         window.faviconMirror.badge(window.val_faviconMirror);
-    }, 500);
+    }, 200);
+    setTimeout(function() {
+        window.val_favicon = 3;
+        window.favicon.badge(window.val_favicon);
+        window.val_faviconMirror = 3;
+        window.faviconMirror.badge(window.val_faviconMirror);
+    }, 1000);    
     setTimeout(function() {
         window.val_faviconSlide = 1;
         window.faviconSlide.badge(window.val_faviconSlide);

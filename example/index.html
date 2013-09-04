@@ -17,13 +17,12 @@
         <meta property="og:image:type" content="image/png"/>
         <meta property="og:image:width" content="160"/>
         <meta property="og:image:height" content="98"/>
-        <!--link href="//netdna.bootstrapcdn.com/bootswatch/3.0.0/cerulean/bootstrap.min.css" rel="stylesheet"-->
-        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet">
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
         <!--[if lt IE 9]>
         <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
         <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
         <![endif]-->
-        <link href="style.css" rel="stylesheet">
+        <link href="style.css" rel="stylesheet"/>
     </head>
 
     <body>
@@ -70,9 +69,7 @@
                         <div class="carousel-caption">
                             <h1>favico.js</h1>
                             <p><img id="badgeMirror" width="140" height="140" src="favicon140.ico"/>
-                            </p>
-                            <p>
-                                Make a use of your favicon with badges, images or videos
+                                <h4> Make a use of your favicon with badges, images or videos </h4>
                             </p>
                             <p>
                                 <a class="btn btn-lg btn-success buttonBig" href="https://bitbucket.org/miroslavmagda/favico.js/src">Download source</small></a>
@@ -91,6 +88,7 @@
                                     Reset
                                 </button>
                             </p>
+                            <h6>Works on Chrome, Firefox and Opera</h6>
                         </div>
                     </div>
                 </div>
@@ -309,12 +307,15 @@ favicon.webcam('stop');
                     </li>
                     <li>
                         Don't use images that are on different domains
-                    </li>                    
+                    </li>
                     <li>
                         Video lagging (because of setTimeout)
                     </li>
                     <li>
                         Webcam is only working on Chrome
+                    </li>
+                    <li>
+                        IE, Safari
                     </li>
                 </ul>
             </p>
@@ -344,7 +345,24 @@ favicon.webcam('stop');
         <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-        <script src="faviconAnimatio-0.0.1.min.js"></script>
+        <script src="favico-0.1.0.min.js"></script>
         <script src="example.js"></script>
+        <script>
+            (function(i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r;
+                i[r] = i[r] ||
+                function() {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date();
+                a = s.createElement(o), m = s.getElementsByTagName(o)[0];
+                a.async = 1;
+                a.src = g;
+                m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-32777257-5', 'ejci.net');
+            ga('send', 'pageview');
+
+        </script>
     </body>
 </html>
