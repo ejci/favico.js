@@ -40,7 +40,7 @@ var Favico = (function(opt) {'use strict';
                 icon.ready();
             };
             //:(
-            //_stupidBrowser = true;
+            _stupidBrowser = true;
             // _stupidBrowser = (/firefox/i.test(navigator.userAgent.toLowerCase())) || (/opera/i.test(navigator.userAgent.toLowerCase()));
         } catch(e) {
             console.error('Error initializing favico...', e);
