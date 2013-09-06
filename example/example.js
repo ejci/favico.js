@@ -76,21 +76,29 @@ $(document).ready(function() {
         if (!video.paused && !video.ended) {
             video.pause();
             video.currentTime = 0;
+            $(e.target).html('Play video');
             window.favicon.video('stop');
         } else {
             window.favicon.video(video);
+            $(e.target).html('Stop video');
             video.play();
         }
     });
     var isWebcam = false;
     $('.favWebcam').click(function(e) {
         //images
+         if(!(/chrome/i.test(navigator.userAgent.toLowerCase()))){
+             alert('Webcam streaming only works on Chrome :(');
+             return;
+         }
         if (isWebcam) {
             window.favicon.webcam('stop');
             //only way to stop webcam :(
+            $(e.target).html('Start webcam');
             location.reload();
         } else {
             window.favicon.webcam();
+            $(e.target).html('Stop webcam');
         }
         isWebcam = !isWebcam;
     });
@@ -106,7 +114,7 @@ $(document).ready(function() {
         window.favicon.badge(window.val_favicon);
         window.val_faviconMirror = 3;
         window.faviconMirror.badge(window.val_faviconMirror);
-    }, 1000);    
+    }, 1000);
     setTimeout(function() {
         window.val_faviconSlide = 1;
         window.faviconSlide.badge(window.val_faviconSlide);

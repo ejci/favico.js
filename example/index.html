@@ -49,6 +49,9 @@
                                     <a href="https://bitbucket.org/miroslavmagda/favico.js/issues">Issues</a>
                                 </li>
                                 <li>
+                                    <a href="http://lab.ejci.net">Other projects</a>
+                                </li>
+                                <li>
                                     <a href="mailto:magda.miroslav@gmail.com">Contact</a>
                                 </li>
                             </ul>
@@ -69,7 +72,7 @@
                         <div class="carousel-caption">
                             <h1>favico.js</h1>
                             <p><img id="badgeMirror" width="140" height="140" src="favicon140.ico"/>
-                                <h4> Make a use of your favicon with badges, images or videos </h4>
+                                <h4>Make a use of your favicon with badges, images or videos </h4>
                             </p>
                             <p>
                                 <a class="btn btn-lg btn-success buttonBig" href="https://bitbucket.org/miroslavmagda/favico.js/src">Download source</small></a>
@@ -84,11 +87,20 @@
                                 <button favicon-action="favicon|minus1|faviconMirror|minus1" class="btn btn-sm btn-primary favBadge">
                                     &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
                                 </button>
+                                <button favicon-action="badgeImageIco" class="btn btn-sm btn-primary favImage">
+                                    Set icon
+                                </button>
+                                <button favicon-action="badgeVideoIco" class="btn btn-sm btn-primary favVideo">
+                                    Play video
+                                </button>
+                                <button favicon-action="badgeVideoIco" class="btn btn-sm btn-primary favWebcam">
+                                    Start webcam
+                                </button>
                                 <button favicon-action="favicon|reset|faviconMirror|reset" class="btn btn-sm btn-primary favBadge">
                                     Reset
                                 </button>
                             </p>
-                            <h6>Works on Chrome, Firefox and Opera</h6>
+                            <h6>Works on Chrome, Firefox, IE10+ and Opera</h6>
                         </div>
                     </div>
                 </div>
@@ -279,7 +291,8 @@ favicon.video('stop');
                 <div class="col-lg-4">
                     <h3>Webcam video to icon</h3>
                     <p class="mkt">
-                        This is only for fun but it works :)
+                        This is only for fun but it works :)<br />
+                        <small>Currently works only on Chrome</small>
                     </p>
                     <p>
                         <button favicon-action="badgeVideoIco" class="btn btn-sm btn-default favWebcam">
@@ -296,6 +309,29 @@ favicon.webcam('stop');
                 </div><!-- /.col-lg-4 -->
             </div>
             <hr>
+            <h4>Roadmap</h4>
+            <p>
+                <ul>
+                    <li>
+                        Code cleanup (it is a mess :( )
+                    </li>
+                    <li>
+                        Support for mobile shortcut icons (if possible)
+                    </li>
+                    <li>
+                        More options (Badge position, animations,...)
+                    </li>
+                    <li>
+                        Flickering issues
+                    </li>
+                    <li>
+                        Support Safari browser (if possible)
+                    </li>
+                    <li>
+                        Bower package
+                    </li>
+                </ul>
+            </p>
             <h4>Issues</h4>
             <p>
                 <ul>
@@ -315,7 +351,7 @@ favicon.webcam('stop');
                         Webcam is only working on Chrome
                     </li>
                     <li>
-                        IE, Safari
+                        Safari
                     </li>
                 </ul>
             </p>
@@ -345,7 +381,7 @@ favicon.webcam('stop');
         <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-        <script src="favico-0.1.0.min.js"></script>
+        <script src="favico-0.1.1.min.js"></script>
         <script src="example.js"></script>
         <script>
             (function(i, s, o, g, r, a, m) {
