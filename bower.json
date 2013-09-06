@@ -1,12 +1,12 @@
 {
   "name": "favico.js",
-  "version": "0.1.0",
-  "main": "favico-0.1.0.js",
+  "version": "0.1.1",
+  "main": "favico.js",
   "description": "Favico.js is a library to manipulate the favicon, adding alert badges, render images or videos.",
   "homepage": "https://bitbucket.org/miroslavmagda/favico.js",
   "license" : ["http://mit-license.org/", "http://www.gnu.org/licenses/"],
   "main": [
-    "favico-0.1.0.js",
+    "favico.js",
   ],
   "keywords": [
     "favicon",
