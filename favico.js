@@ -1,7 +1,7 @@
 /**
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.1.1
+ * @version 0.1.2
  */
 var Favico = (function(opt) {'use strict';
     opt = (opt) ? opt : {};
@@ -271,8 +271,8 @@ var Favico = (function(opt) {'use strict';
      */
     var webcam = function(action) {
         if (!(/chrome/i.test(navigator.userAgent.toLowerCase()))) {
-            console.log('Sorry. Only chrome is supported yet...');
-            return;
+            //console.log('Sorry. Only chrome is supported yet...');
+            //return;
         }
         var newVideo = false;
         navigator.getUserMedia = navigator.getUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
@@ -317,7 +317,9 @@ var Favico = (function(opt) {'use strict';
             return false;
         }
         _context.clearRect(0, 0, _w, _h);
-        _context.drawImage(video, 0, 0, _w, _h);
+        //_context.drawImage(video, 0, 0, _w, _h);
+        //Julian Ćwirko kontakt@redsunmedia.pl: dirty workaround for Firefox
+        try {_context.drawImage(video, 0, 0, _w, _h);}catch(err) {};
         setTimeout(drawVideo, animation.duration, video);
         fvi.setIcon(_canvas);
     }
