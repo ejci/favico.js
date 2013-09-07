@@ -73,6 +73,7 @@ $(document).ready(function() {
         //images
         var favBadge = $(e.target).attr('favicon-action');
         var video = document.getElementById(favBadge);
+        video.volume = 0.2;
         if (!video.paused && !video.ended) {
             video.pause();
             video.currentTime = 0;
@@ -87,20 +88,22 @@ $(document).ready(function() {
     var isWebcam = false;
     $('.favWebcam').click(function(e) {
         //images
-         if(!(/chrome/i.test(navigator.userAgent.toLowerCase()))){
-             alert('Webcam streaming only works on Chrome :(');
-             return;
-         }
-        if (isWebcam) {
-            window.favicon.webcam('stop');
-            //only way to stop webcam :(
-            $(e.target).html('Start webcam');
-            location.reload();
+        if ((/chrome/i.test(navigator.userAgent.toLowerCase())) || (/firefox/i.test(navigator.userAgent.toLowerCase()))) {
+            if (isWebcam) {
+                window.favicon.webcam('stop');
+                //only way to stop webcam :(
+                $(e.target).html('Start webcam');
+                location.reload();
+            } else {
+                window.favicon.webcam();
+                $(e.target).html('Stop webcam');
+            }
+            isWebcam = !isWebcam;
         } else {
-            window.favicon.webcam();
-            $(e.target).html('Stop webcam');
+            alert('Webcam streaming only works on Chrome and Firefox :(');
+            return;
         }
-        isWebcam = !isWebcam;
+
     });
 
     setTimeout(function() {
