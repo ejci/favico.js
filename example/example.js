@@ -1,8 +1,11 @@
 $(document).ready(function() {
-    //    return;
-    window.favicon = new Favico();
+       // return;
+    window.favicon = new Favico({
+        animation : 'popFade'
+    });
     window.faviconMirror = new Favico({
-        elementId : 'badgeMirror',
+        animation : 'popFade',
+        elementId : 'badgeMirror'
     });
     window.faviconSlide = new Favico({
         animation : 'slide',
@@ -15,6 +18,14 @@ $(document).ready(function() {
     window.faviconPop = new Favico({
         animation : 'pop',
         elementId : 'badgePop'
+    });
+    window.faviconPopFade = new Favico({
+        animation : 'popFade',
+        elementId : 'badgePopFade'
+    });
+    window.faviconNone = new Favico({
+        animation : 'none',
+        elementId : 'badgeNone'
     });
     window.faviconColor = new Favico({
         bgColor : '#5CB85C',
@@ -39,7 +50,7 @@ $(document).ready(function() {
         return window[val];
     };
     window.minus1 = function(val) {
-        console.log(window[val]);
+        //console.log(window[val]);
         if ( typeof window[val] === 'undefined') {
             window[val] = 1;
         } else {
@@ -88,7 +99,8 @@ $(document).ready(function() {
     var isWebcam = false;
     $('.favWebcam').click(function(e) {
         //images
-        if ((/chrome/i.test(navigator.userAgent.toLowerCase())) || (/firefox/i.test(navigator.userAgent.toLowerCase()))) {
+        //if ((/chrome/i.test(navigator.userAgent.toLowerCase())) || (/firefox/i.test(navigator.userAgent.toLowerCase()))) {
+        if(true){
             if (isWebcam) {
                 window.favicon.webcam('stop');
                 //only way to stop webcam :(
@@ -125,11 +137,15 @@ $(document).ready(function() {
         window.faviconFade.badge(window.val_faviconFade);
         window.val_faviconPop = 3;
         window.faviconPop.badge(window.val_faviconPop);
-        window.val_faviconColor = 4;
+        window.val_faviconPopFade = 1;
+        window.faviconPopFade.badge(window.val_faviconPopFade);
+        window.val_faviconNone = 2;
+        window.faviconNone.badge(window.val_faviconNone);
+        window.val_faviconColor = 3;
         window.faviconColor.badge(window.val_faviconColor);
-        window.val_faviconShape = 5;
+        window.val_faviconShape = 1;
         window.faviconShape.badge(window.val_faviconShape);
-        window.val_faviconImage = 6;
+        window.val_faviconImage = 2;
         window.faviconImage.badge(window.val_faviconImage);
     }, 1500);
 });

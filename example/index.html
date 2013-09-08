@@ -7,6 +7,7 @@
         <meta name="author" content="">
 
         <link rel="shortcut icon" type="image/png" href="favicon32.ico">
+        <!--link rel="icon" type="image/png" href="favicon32.ico"-->
 
         <title>favico.js - Make a use of your favicon</title>
         <meta property="og:title" content="favico.js"/>
@@ -100,7 +101,7 @@
                                     Reset
                                 </button>
                             </p>
-                            <h6>Works on Chrome, Firefox, IE10+ and Opera</h6>
+                            <h6>Works on Chrome, Firefox, Opera <span style="text-decoration: line-through;">and IE10+</span></h6>
                         </div>
                     </div>
                 </div>
@@ -177,6 +178,52 @@ favicon.badge(3);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
+                    <h3>Pop & fade animation</h3>
+                    <span class="browser"> <img id="badgePopFade" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconPopFade|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconPopFade|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconPopFade|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    animation:'popFade'
+});
+favicon.badge(1);
+
+</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Without animation</h3>
+                    <span class="browser"> <img id="badgeNone" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconNone|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconNone|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconNone|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    animation:'none'
+});
+favicon.badge(2);
+
+</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
                     <h3>Color settings</h3>
                     <span class="browser"> <img id="badgeColor" width="16" height="16" src="favicon32.ico"/> </span>
                     <p>
@@ -195,7 +242,7 @@ favicon.badge(3);</pre>
     bgColor : '#5CB85C',
     textColor : '#ff0',
 });
-favicon.badge(4);</pre>
+favicon.badge(3);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
@@ -217,7 +264,7 @@ favicon.badge(4);</pre>
     type : 'rectangle',
     animation: 'slide',
 });
-favicon.badge(5);</pre>
+favicon.badge(1);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
@@ -239,7 +286,7 @@ favicon.badge(5);</pre>
     type : 'rectangle',
     elementId : 'badgeImage'
 });
-favicon.badge(6);</pre>
+favicon.badge(2);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
             </div>
@@ -291,8 +338,9 @@ favicon.video('stop');
                 <div class="col-lg-4">
                     <h3>Webcam video to icon</h3>
                     <p class="mkt">
-                        This is only for fun but it works :)<br />
-                        <small>Currently works only on Chrome</small>
+                        This is only for fun but it works :)
+                        <br />
+                        <small>Works on Chrome, Firefox an Opera</small>
                     </p>
                     <p>
                         <button favicon-action="badgeVideoIco" class="btn btn-sm btn-default favWebcam">
@@ -310,16 +358,12 @@ favicon.webcam('stop');
             </div>
             <hr>
             <p>
-                Check out also <a href="http://blog.tommoor.com/tinycon/">Tinycon</a>, 
-                <a href="http://www.thepetedesign.com/demos/notify_better_demo.html">Notify Better</a> or 
-                <a href="https://github.com/Dlom/favicon.js">favicon.js</a>.
+                Check out also <a href="http://blog.tommoor.com/tinycon/">Tinycon</a>, <a href="http://www.thepetedesign.com/demos/notify_better_demo.html">Notify Better</a> or <a href="https://github.com/Dlom/favicon.js">favicon.js</a>.
             </p>
+            <hr>
             <h4>Roadmap</h4>
             <p>
                 <ul>
-                    <li>
-                        Code cleanup (it is a mess :( )
-                    </li>
                     <li>
                         Support for mobile shortcut icons (if possible)
                     </li>
@@ -327,10 +371,10 @@ favicon.webcam('stop');
                         More options (Badge position, animations,...)
                     </li>
                     <li>
-                        Flickering issues
+                        Support Safari browser (if possible)
                     </li>
                     <li>
-                        Support Safari browser (if possible)
+                        Support IE browser (if possible)
                     </li>
                     <li>
                         Bower package
@@ -344,25 +388,19 @@ favicon.webcam('stop');
                         There is a problem if you are using icon that is on a different domain
                     </li>
                     <li>
-                        In Opera browser there is some flickering :(
-                    </li>
-                    <li>
-                        Don't use images that are on different domains
-                    </li>
-                    <li>
-                        Video lagging (because of setTimeout)
+                        Don't use favicons that are on different domain than your sote
                     </li>
                     <li>
                         Webcam is only working on Chrome
                     </li>
                     <li>
-                        Safari
+                        Safari & IE
                     </li>
                 </ul>
             </p>
             <h4>License</h4>
             <p>
-                All code is open source and dual licensed under <a href="http://www.gnu.org/licenses/gpl.html">GPL</a> and <a href="http://opensource.org/licenses/MIT">MIT</a>. Check the individual licenses for more information.
+                All code is open source and dual licensed under <a href="https://bitbucket.org/miroslavmagda/favico.js/raw/master/GPL-LICENSE.txt">GPL</a> and <a href="https://bitbucket.org/miroslavmagda/favico.js/raw/master/MIT-LICENSE.txt">MIT</a>. Check the individual licenses for more information.
             </p>
             <hr>
 
@@ -386,20 +424,19 @@ favicon.webcam('stop');
         <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-        <!--script src="favico-0.1.1.min.js"></script-->
-        <script src="../favico.js"></script>
+        <script src="favico-0.2.0.min.js"></script>
         <script src="example.js"></script>
         <script>
             (function(i, s, o, g, r, a, m) {
                 i['GoogleAnalyticsObject'] = r;
                 i[r] = i[r] ||
                 function() {
-                    (i[r].q = i[r].q || []).push(arguments)
+                    (i[r].q = i[r].q || []).push(arguments);
                 }, i[r].l = 1 * new Date();
                 a = s.createElement(o), m = s.getElementsByTagName(o)[0];
                 a.async = 1;
                 a.src = g;
-                m.parentNode.insertBefore(a, m)
+                m.parentNode.insertBefore(a, m);
             })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
             ga('create', 'UA-32777257-5', 'ejci.net');
