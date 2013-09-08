@@ -1,7 +1,20 @@
 /**
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.1.2
+ * @version 0.2.0
+ */
+
+/**
+ * Create new favico instance
+ * @param {Object} Options
+ * @return {Object} Favico object
+ * @example
+ * var favico = new Favico({
+ *    bgColor : '#d00',
+ *    textColor : '#fff',
+ *    type : 'circle',
+ *    animation : 'slide',
+ * });
  */
 var Favico = (function(opt) {'use strict';
     opt = (opt) ? opt : {};
@@ -12,22 +25,27 @@ var Favico = (function(opt) {'use strict';
         animation : 'slide',
         elementId : false
     };
-    var _opt, _orig, _h, _w, _canvas, _context, _img, _stupidBrowser, _ready, _lastBadge, _runinng, _readyCb, _stop;
+    var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _runinng, _readyCb, _stop, _browser;
+
     var _queue = [];
     _readyCb = function() {
     };
     _ready = _stop = false;
-    //merge initial options
-    _opt = merge(_def, opt);
-    _opt.bgColor = hexToRgb(_opt.bgColor);
-    _opt.textColor = hexToRgb(_opt.textColor);
     /**
      * Initialize favico
      */
     var init = function() {
+        //merge initial options
+        _opt = merge(_def, opt);
+        _opt.bgColor = hexToRgb(_opt.bgColor);
+        _opt.textColor = hexToRgb(_opt.textColor);
+        _opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
+        _opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
         try {
-            _orig = fvi.getIcon();
+            _orig = link.getIcon();
+            //create temp canvas
             _canvas = document.createElement('canvas');
+            //create temp image
             _img = document.createElement('img');
             _img.setAttribute('src', _orig.getAttribute('href'));
             //get width/height
@@ -39,12 +57,17 @@ var Favico = (function(opt) {'use strict';
                 _context = _canvas.getContext('2d');
                 icon.ready();
             };
-            //:(
-            _stupidBrowser = true;
-            _stupidBrowser = !(/chrome/i.test(navigator.userAgent.toLowerCase()));
-            // _stupidBrowser = (/firefox/i.test(navigator.userAgent.toLowerCase())) || (/opera/i.test(navigator.userAgent.toLowerCase()));
+            _browser = {};
+            _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
+            _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
+            _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
+            _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
+            _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
+            if (_browser.ie) {
+                console.warn('IE is not supported...');
+            }
         } catch(e) {
-            console.error('Error initializing favico...', e);
+            console.error('Error initializing favico...', e, opt);
         }
 
     };
@@ -69,7 +92,7 @@ var Favico = (function(opt) {'use strict';
         _lastBadge = false;
         _context.clearRect(0, 0, _w, _h);
         _context.drawImage(_img, 0, 0, _w, _h);
-        fvi.setIcon(_canvas);
+        link.setIcon(_canvas);
     };
     /**
      * Start animation
@@ -108,7 +131,6 @@ var Favico = (function(opt) {'use strict';
      * Badge types
      */
     var type = {};
-    //set default options from "relative values"
     var options = function(opt) {
         opt.n = Math.abs(opt.n);
         opt.x = _w * opt.x;
@@ -119,6 +141,7 @@ var Favico = (function(opt) {'use strict';
     };
     /**
      * Generate circle
+     * @param {Object} opt Badge options
      */
     type.circle = function(opt) {
         opt = options(opt);
@@ -127,8 +150,6 @@ var Favico = (function(opt) {'use strict';
             opt.x = opt.x - opt.w * .4;
             opt.w = opt.w * 1.4;
         }
-        //console.log('circle', opt);
-        //reset
         _context.clearRect(0, 0, _w, _h);
         _context.drawImage(_img, 0, 0, _w, _h);
         _context.beginPath();
@@ -158,6 +179,7 @@ var Favico = (function(opt) {'use strict';
     };
     /**
      * Generate rectangle
+     * @param {Object} opt Badge options
      */
     type.rectangle = function(opt) {
         opt = options(opt);
@@ -166,7 +188,6 @@ var Favico = (function(opt) {'use strict';
             opt.x = Math.floor(opt.x - opt.w * .4);
             opt.w = Math.floor(opt.w * 1.4);
         }
-        //console.log('rectangle', opt);
         _context.clearRect(0, 0, _w, _h);
         _context.drawImage(_img, 0, 0, _w, _h);
         _context.beginPath();
@@ -222,15 +243,14 @@ var Favico = (function(opt) {'use strict';
                 var newImg = document.createElement('img');
                 var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
                 newImg.setAttribute('src', imageElement.getAttribute('src'));
-                console.log(w, h, ratio);
                 newImg.height = (h / ratio);
                 newImg.width = (w / ratio);
                 _context.clearRect(0, 0, _w, _h);
                 _context.drawImage(newImg, 0, 0, _w, _h);
-                fvi.setIcon(_canvas);
+                link.setIcon(_canvas);
             } catch(e) {
-                throw e;
                 console.error('Error setting image...', e);
+                throw e;
             }
         };
         if (_ready) {
@@ -258,8 +278,8 @@ var Favico = (function(opt) {'use strict';
                 }, false);
 
             } catch(e) {
+                console.error('Error setting video...', e);
                 throw e;
-                console.error('Error setting image...', e);
             }
         };
         if (_ready) {
@@ -270,43 +290,48 @@ var Favico = (function(opt) {'use strict';
      * Set video as icon
      */
     var webcam = function(action) {
-        if (!(/chrome/i.test(navigator.userAgent.toLowerCase()))) {
-            //console.log('Sorry. Only chrome is supported yet...');
-            //return;
+        //UR
+        if (!window.URL || !window.URL.createObjectURL) {
+            window.URL = window.URL || {};
+            window.URL.createObjectURL = function(obj) {
+                return obj;
+            };
         }
-        var newVideo = false;
-        navigator.getUserMedia = navigator.getUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
-        _readyCb = function() {
-            try {
-                if (action === 'stop') {
-                    _stop = true;
-                    icon.reset();
-                    _stop = false;
-                    return;
+        if (_browser.supported) {
+            var newVideo = false;
+            navigator.getUserMedia = navigator.getUserMedia || navigator.oGetUserMedia || navigator.msGetUserMedia || navigator.mozGetUserMedia || navigator.webkitGetUserMedia;
+            _readyCb = function() {
+                try {
+                    if (action === 'stop') {
+                        _stop = true;
+                        icon.reset();
+                        _stop = false;
+                        return;
+                    }
+                    newVideo = document.createElement('video');
+                    newVideo.width = _w;
+                    newVideo.height = _h;
+                    navigator.getUserMedia({
+                        video : true,
+                        audio : false
+                    }, function(stream) {
+                        newVideo.src = URL.createObjectURL(stream);
+                        newVideo.play();
+                        drawVideo(newVideo);
+                    }, function() {
+                    });
+                } catch(e) {
+                    console.error('Error setting webcam...', e);
+                    throw e;
                 }
-                newVideo = document.createElement('video');
-                newVideo.width = _w;
-                newVideo.height = _h;
-
-                //get stream (TODO: open .mp4 video?)
-                navigator.getUserMedia({
-                    video : true,
-                    audio : false
-                }, function(stream) {
-                    newVideo.src = URL.createObjectURL(stream);
-                    newVideo.play();
-                    drawVideo(newVideo);
-                }, function() {
-                });
-
-            } catch(e) {
-                throw e;
-                console.error('Error setting image...', e);
+            };
+            if (_ready) {
+                _readyCb();
             }
-        };
-        if (_ready) {
-            _readyCb();
+        } else {
+            console.log('Sorry. Only chrome and firefox  is supported yet...');
         }
+
     };
 
     /**
@@ -316,73 +341,76 @@ var Favico = (function(opt) {'use strict';
         if (video.paused || video.ended || _stop) {
             return false;
         }
-        _context.clearRect(0, 0, _w, _h);
-        //_context.drawImage(video, 0, 0, _w, _h);
-        //Julian Ćwirko kontakt@redsunmedia.pl: dirty workaround for Firefox
-        try {_context.drawImage(video, 0, 0, _w, _h);}catch(err) {};
+        //nasty hack for FF webcam (Thanks to Julian Ćwirko, kontakt@redsunmedia.pl)
+        try {
+            _context.clearRect(0, 0, _w, _h);
+            _context.drawImage(video, 0, 0, _w, _h);
+        } catch(e) {
+
+        }
         setTimeout(drawVideo, animation.duration, video);
-        fvi.setIcon(_canvas);
+        link.setIcon(_canvas);
     }
 
-    //dom manipulation
-    var fvi = {};
+    var link = {};
     /**
-     * Get icon element
-     * @return DOMElement
+     * Get icon from HEAD tag or create a new <link> element
      */
-    fvi.setIcon = function(can) {
-        var url = can.toDataURL('image/png');
-        if (_opt.elementId) {
-            document.getElementById(_opt.elementId).setAttribute('src', url);
-        } else {
-            if (_stupidBrowser) {
-                fvi.remove(_orig);
-                _orig = fvi.create();
+    link.getIcon = function() {
+        var elm = false;
+        //get link element
+        var getLink = function() {
+            var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
+            for (var l = link.length, i = (l - 1); i >= 0; i--) {
+                if ((/icon/i).test(link[i].getAttribute('rel'))) {
+                    return link[i];
+                }
             }
-            _orig.setAttribute('href', url);
-        }
-    };
-    /**
-     * Get econ element
-     * @return DOMElement
-     */
-    fvi.getIcon = function() {
-        var elm = null;
+            return false;
+        };
         if (_opt.elementId) {
+            //if img element identified by elementId
             elm = document.getElementById(_opt.elementId);
             elm.setAttribute('href', elm.getAttribute('src'));
         } else {
-            elm = fvi.get();
-            if (elm == null) {
-                fvi.create();
-                elm = fvi.get();
+            //if link element
+            elm = getLink();
+            if (elm === false) {
+                elm = document.createElement('link');
+                elm.setAttribute('rel', 'icon');
+                document.getElementsByTagName('head')[0].appendChild(elm);
             }
         }
+        elm.setAttribute('type', 'imapge/png');
         return elm;
     };
-
-    fvi.create = function() {
-        var newElm;
-        newElm = document.createElement('link');
-        newElm.setAttribute('rel', 'icon');
-        newElm.setAttribute('href', 'data:,');
-        document.getElementsByTagName('head')[0].appendChild(newElm);
-        return newElm;
-    };
-    fvi.remove = function(elm) {
-        elm.parentNode.removeChild(elm);
-    };
-    fvi.get = function() {
-        //find element
-        var elm = null;
-        var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
-        var l = link.length;
-        for (var i = (l - 1); i >= 0; i--) {
-            if ((/icon/i).test(link[i].getAttribute('rel'))) {
-                elm = link[i];
+    link.setIcon = function(canvas) {
+        var url = canvas.toDataURL('image/png');
+        if (_opt.elementId) {
+            //if is attached to element (image)
+            document.getElementById(_opt.elementId).setAttribute('src', url);
+        } else {
+            //if is attached to fav icon
+            if (_browser.ff || _browser.opera) {
+                //for FF we need to "recreate" element, atach to dom and remove old <link>
+                var originalType = _orig.getAttribute('rel');
+                var old = _orig;
+                _orig = document.createElement('link');
+                //_orig.setAttribute('rel', originalType);
+                if (_browser.opera) {
+                    _orig.setAttribute('rel', 'icon');
+                }
+                _orig.setAttribute('rel', 'icon');
+                _orig.setAttribute('type', 'image/png');
+                document.getElementsByTagName('head')[0].appendChild(_orig);
+                _orig.setAttribute('href', url);
+                if (old.parentNode) {
+                    old.parentNode.removeChild(old);
+                }
+            } else {
+                _orig.setAttribute('href', url);
             }
         }
-        return elm;
     };
 
     //http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#answer-5624139
@@ -542,6 +570,49 @@ var Favico = (function(opt) {'use strict';
         h : 0.6,
         o : 1
     }];
+    animation.types.popFade = [{
+        x : 0.75,
+        y : 0.75,
+        w : 0,
+        h : 0,
+        o : 0
+    }, {
+        x : 0.65,
+        y : 0.65,
+        w : 0.1,
+        h : 0.1,
+        o : 0.2
+    }, {
+        x : 0.6,
+        y : 0.6,
+        w : 0.2,
+        h : 0.2,
+        o : 0.4
+    }, {
+        x : 0.55,
+        y : 0.55,
+        w : 0.3,
+        h : 0.3,
+        o : 0.6
+    }, {
+        x : 0.50,
+        y : 0.50,
+        w : 0.4,
+        h : 0.4,
+        o : 0.8
+    }, {
+        x : 0.45,
+        y : 0.45,
+        w : 0.5,
+        h : 0.5,
+        o : 0.9
+    }, {
+        x : 0.4,
+        y : 0.4,
+        w : 0.6,
+        h : 0.6,
+        o : 1
+    }];
     animation.types.slide = [{
         x : 0.4,
         y : 1,
@@ -599,9 +670,7 @@ var Favico = (function(opt) {'use strict';
      * @param {Object} step Optional step number (frame bumber)
      */
     animation.run = function(opt, cb, revert, step) {
-        //revert = true;
         var animationType = animation.types[_opt.animation];
-        //revert = (revert) ? true : false;
         if (revert === true) {
             step = ( typeof step !== 'undefined') ? step : animationType.length - 1;
         } else {
@@ -610,9 +679,7 @@ var Favico = (function(opt) {'use strict';
         cb = (cb) ? cb : function() {
         };
         if ((step < animationType.length) && (step >= 0)) {
-            //console.log(_opt.animation, opt, animationType[step], merge(opt, animationType[step]));
             type[_opt.type](merge(opt, animationType[step]));
-            fvi.setIcon(_canvas);
             setTimeout(function() {
                 if (revert) {
                     step = step - 1;
@@ -621,12 +688,13 @@ var Favico = (function(opt) {'use strict';
                 }
                 animation.run(opt, cb, revert, step);
             }, animation.duration);
+
+            link.setIcon(_canvas);
         } else {
             cb();
             return;
         }
     };
-
     //auto init
     init();
     return {
@@ -634,6 +702,7 @@ var Favico = (function(opt) {'use strict';
         video : video,
         image : image,
         webcam : webcam,
-        reset: icon.reset
+        reset : icon.reset
     };
 });
+
