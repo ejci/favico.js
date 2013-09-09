@@ -381,7 +381,7 @@ var Favico = (function(opt) {'use strict';
                 document.getElementsByTagName('head')[0].appendChild(elm);
             }
         }
-        elm.setAttribute('type', 'imapge/png');
+        elm.setAttribute('type', 'image/png'); //misspelled "image" 
         return elm;
     };
     link.setIcon = function(canvas) {
