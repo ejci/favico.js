@@ -14,7 +14,9 @@ All code is open source and dual licensed under GPL and MIT. Check the individua
 * Improved performance for Opera and Firefox
 * New animation type popfade
 * Code cleanup
+
 ####0.1.1
 * Improving performance in chrome 
+
 ####0.1.0
 * proof of concept 

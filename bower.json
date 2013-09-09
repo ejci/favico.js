@@ -4,7 +4,7 @@
   "main": "favico.js",
   "description": "Favico.js is a library to manipulate the favicon, adding alert badges, render images or videos.",
   "homepage": "http://lab.ejci.net/favico.js/",
-  "license" : ["https://bitbucket.org/miroslavmagda/favico.js/raw/master/MIT-LICENSE.txt", "https://bitbucket.org/miroslavmagda/favico.js/raw/master/GPL-LICENSE.txt"],
+  "license" : ["https://raw.github.com/ejci/favico.js/master/MIT-LICENSE.txt", "https://raw.github.com/ejci/favico.js/master/GPL-LICENSE.txt"],
   "main": [
     "favico.js",
   ],
