@@ -25,7 +25,7 @@ var Favico = (function(opt) {'use strict';
         animation : 'slide',
         elementId : false
     };
-    var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _runinng, _readyCb, _stop, _browser;
+    var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser;
 
     var _queue = [];
     _readyCb = function() {
@@ -98,12 +98,12 @@ var Favico = (function(opt) {'use strict';
      * Start animation
      */
     icon.start = function() {
-        if (!_ready || _runinng) {
+        if (!_ready || _running) {
             return;
         }
         var finished = function() {
             _lastBadge = _queue[0];
-            _runinng = false;
+            _running = false;
             if (_queue.length > 0) {
                 _queue.shift();
                 icon.start();
@@ -112,7 +112,7 @@ var Favico = (function(opt) {'use strict';
             }
         };
         if (_queue.length > 0) {
-            _runinng = true;
+            _running = true;
             if (_lastBadge) {
                 animation.run(_lastBadge.options, function() {
                     animation.run(_queue[0].options, function() {
