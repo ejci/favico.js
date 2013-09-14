@@ -63,11 +63,8 @@ var Favico = (function(opt) {'use strict';
             _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
             _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
             _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
-            if (_browser.ie) {
-                console.warn('IE is not supported...');
-            }
         } catch(e) {
-            console.error('Error initializing favico...', e, opt);
+            throw 'Error initializing favico...';
         }
 
     };
@@ -217,14 +214,15 @@ var Favico = (function(opt) {'use strict';
                         }
                     });
                     if (_queue.length > 100) {
-                        console.warn('Too many badges request in queue...');
+                        throw 'Too many badges requests in queue...';
+                        return;
                     }
                     icon.start();
                 } else {
                     icon.reset();
                 }
             } catch(e) {
-                console.error('Error setting badge...', e);
+                throw 'Error setting badge...';
             }
         };
         if (_ready) {
@@ -249,8 +247,7 @@ var Favico = (function(opt) {'use strict';
                 _context.drawImage(newImg, 0, 0, _w, _h);
                 link.setIcon(_canvas);
             } catch(e) {
-                console.error('Error setting image...', e);
-                throw e;
+                throw 'Error setting image...';
             }
         };
         if (_ready) {
@@ -278,8 +275,7 @@ var Favico = (function(opt) {'use strict';
                 }, false);
 
             } catch(e) {
-                console.error('Error setting video...', e);
-                throw e;
+                throw 'Error setting video...';
             }
         };
         if (_ready) {
@@ -321,15 +317,12 @@ var Favico = (function(opt) {'use strict';
                     }, function() {
                     });
                 } catch(e) {
-                    console.error('Error setting webcam...', e);
-                    throw e;
+                    throw 'Error setting webcam...';
                 }
             };
             if (_ready) {
                 _readyCb();
             }
-        } else {
-            console.log('Sorry. Only chrome and firefox  is supported yet...');
         }
 
     };
@@ -381,7 +374,8 @@ var Favico = (function(opt) {'use strict';
                 document.getElementsByTagName('head')[0].appendChild(elm);
             }
         }
-        elm.setAttribute('type', 'image/png'); //misspelled "image" 
+        elm.setAttribute('type', 'image/png');
+        //misspelled "image"
         return elm;
     };
     link.setIcon = function(canvas) {
