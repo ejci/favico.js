@@ -9,6 +9,9 @@ Version 0.2.0
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ###Change log
+####0.2.2
+* AMD - CommonJS compatibility
+
 ####0.2.1
 * Fixed console.log bug
 * registered to bower
