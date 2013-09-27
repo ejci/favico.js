@@ -1,4 +1,5 @@
 /**
+ * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
  * @version 0.2.1
@@ -16,6 +17,8 @@
  *    animation : 'slide',
  * });
  */
+(function () {
+
 var Favico = (function(opt) {'use strict';
     opt = (opt) ? opt : {};
     var _def = {
@@ -144,7 +147,7 @@ var Favico = (function(opt) {'use strict';
         opt = options(opt);
         var more = (opt.n > 9);
         if (more) {
-            opt.x = opt.x - opt.w * .4;
+            opt.x = opt.x - opt.w * 0.4;
             opt.w = opt.w * 1.4;
         }
         _context.clearRect(0, 0, _w, _h);
@@ -182,7 +185,7 @@ var Favico = (function(opt) {'use strict';
         opt = options(opt);
         var more = (opt.n > 9);
         if (more) {
-            opt.x = Math.floor(opt.x - opt.w * .4);
+            opt.x = Math.floor(opt.x - opt.w * 0.4);
             opt.w = Math.floor(opt.w * 1.4);
         }
         _context.clearRect(0, 0, _w, _h);
@@ -215,7 +218,6 @@ var Favico = (function(opt) {'use strict';
                     });
                     if (_queue.length > 100) {
                         throw 'Too many badges requests in queue...';
-                        return;
                     }
                     icon.start();
                 } else {
@@ -420,16 +422,17 @@ var Favico = (function(opt) {'use strict';
             g : parseInt(result[2], 16),
             b : parseInt(result[3], 16)
         } : false;
-    };
+    }
     /**
      * Merge options
      */
     function merge(def, opt) {
         var mergedOpt = {};
-        for (var attrname in def) {
+        var attrname;
+        for (attrname in def) {
             mergedOpt[attrname] = def[attrname];
         }
-        for (var attrname in opt) {
+        for (attrname in opt) {
             mergedOpt[attrname] = opt[attrname];
         }
         return mergedOpt;
@@ -700,3 +703,19 @@ var Favico = (function(opt) {'use strict';
     };
 });
 
+// AMD / RequireJS
+if (typeof define !== 'undefined' && define.amd) {
+    define([], function () {
+        return Favico;
+    });
+}
+// CommonJS
+else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Favico;
+}
+// included directly via <script> tag
+else {
+    this.Favico = Favico;
+}
+
+})();
