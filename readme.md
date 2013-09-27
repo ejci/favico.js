@@ -3,12 +3,15 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.2.0
+Version 0.2.2
 
 ##License
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ###Change log
+####0.2.2
+* AMD - CommonJS compatibility
+
 ####0.2.0
 * Webcam support for Opera and Firefox
 * Improved performance for Opera and Firefox
