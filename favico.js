@@ -17,6 +17,8 @@
  *    animation : 'slide',
  * });
  */
+(function () {
+
 var Favico = (function(opt) {'use strict';
     opt = (opt) ? opt : {};
     var _def = {
@@ -701,3 +703,19 @@ var Favico = (function(opt) {'use strict';
     };
 });
 
+// AMD / RequireJS
+if (typeof define !== 'undefined' && define.amd) {
+    define([], function () {
+        return Favico;
+    });
+}
+// CommonJS
+else if (typeof module !== 'undefined' && module.exports) {
+    module.exports = Favico;
+}
+// included directly via <script> tag
+else {
+    this.Favico = Favico;
+}
+
+})();
