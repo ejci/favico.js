@@ -1,0 +1,23 @@
+{
+  "name": "favico.js",
+  "version": "0.2.1",
+  "description": "Favico.js is a library to manipulate the favicon, adding alert badges, render images or videos.",
+  "main": "favico.js",
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/ejci/favico.js.git"
+  },
+  "keywords": [
+    "favicon",
+    "badge"
+  ],
+  "author": "Miroslav Magda <magda.miroslav@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ejci/favico.js/issues"
+  },
+  "devDependencies": {
+    "uglify-js": "~2.4.0",
+    "jshint": "~2.1.11"
+  }
+}
