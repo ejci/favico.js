@@ -147,7 +147,7 @@
          */
         type.circle = function(opt) {
             opt = options(opt);
-            var more = (opt.n > 9);
+            var more = (opt.n > 9 && opt.n < 100);
             if (more) {
                 opt.x = opt.x - opt.w * 0.4;
                 opt.w = opt.w * 1.4;
@@ -176,7 +176,12 @@
             _context.beginPath();
             _context.stroke();
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
-            _context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            if (opt.n > 99) {
+                _context.fillText('∞', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            } else {
+                _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            }
             _context.closePath();
         };
         /**
@@ -185,7 +190,7 @@
          */
         type.rectangle = function(opt) {
             opt = options(opt);
-            var more = (opt.n > 9);
+            var more = (opt.n > 9 && opt.n < 100);
             if (more) {
                 opt.x = Math.floor(opt.x - opt.w * 0.4);
                 opt.w = Math.floor(opt.w * 1.4);
@@ -198,7 +203,12 @@
             _context.fillStyle = 'rgba(' + _opt.bgColor.r + ',' + _opt.bgColor.g + ',' + _opt.bgColor.b + ',' + opt.o + ')';
             _context.fillRect(opt.x, opt.y, opt.w, opt.h);
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
-            _context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            if (opt.n > 99) {
+                _context.fillText('∞', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            } else {
+                _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            }
             _context.closePath();
         };
 
