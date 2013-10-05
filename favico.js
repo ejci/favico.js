@@ -297,10 +297,9 @@
                         _stop = false;
                         return;
                     }
-                    var w = videoElement.width;
-                    var h = videoElement.height;
-                    var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
-
+                    //var w = videoElement.width;
+                    //var h = videoElement.height;
+                    //var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
                     videoElement.addEventListener('play', function() {
                         drawVideo(this);
                     }, false);
@@ -418,7 +417,7 @@
                 //if is attached to fav icon
                 if (_browser.ff || _browser.opera) {
                     //for FF we need to "recreate" element, atach to dom and remove old <link>
-                    var originalType = _orig.getAttribute('rel');
+                    //var originalType = _orig.getAttribute('rel');
                     var old = _orig;
                     _orig = document.createElement('link');
                     //_orig.setAttribute('rel', originalType);

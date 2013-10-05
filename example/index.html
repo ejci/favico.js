@@ -71,7 +71,7 @@
                 <div class="item active">
                     <div class="container">
                         <div class="carousel-caption">
-                            <h1>favico.js</h1>
+                            <h1>favico.js <small>v0.3.0</small></h1>
                             <p><img id="badgeMirror" width="140" height="140" src="favicon140.ico"/>
                                 <h4>Make a use of your favicon with badges, images or videos </h4>
                             </p>
@@ -111,7 +111,7 @@
         <div class="container marketing">
             <h3>Badges</h3>
             <p>
-                Animate your favicon with animated badges. You can customize type of animation, background color and text color.
+                Animate your favicon with animated badges. You can customize type of animation, position, background color and text color.
             </p>
             <div class="row">
                 <div class="col-lg-4">
@@ -195,9 +195,7 @@ favicon.badge(3);</pre>
                         <pre class="text-left">var favicon=new Favico({
     animation:'popFade'
 });
-favicon.badge(1);
-
-</pre>
+favicon.badge(1);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
@@ -218,29 +216,26 @@ favicon.badge(1);
                         <pre class="text-left">var favicon=new Favico({
     animation:'none'
 });
-favicon.badge(2);
-
-</pre>
+favicon.badge(2);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
                 <div class="col-lg-4">
-                    <h3>Color settings</h3>
-                    <span class="browser"> <img id="badgeColor" width="16" height="16" src="favicon32.ico"/> </span>
+                    <h3>Position</h3>
+                    <span class="browser"> <img id="badgePosition" width="16" height="16" src="favicon32.ico"/> </span>
                     <p>
-                        <button favicon-action="faviconColor|plus1" class="btn btn-sm btn-default favBadge">
+                        <button favicon-action="faviconPosition|plus1" class="btn btn-sm btn-default favBadge">
                             &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
                         </button>
-                        <button favicon-action="faviconColor|minus1" class="btn btn-sm btn-default favBadge">
+                        <button favicon-action="faviconPosition|minus1" class="btn btn-sm btn-default favBadge">
                             &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
                         </button>
-                        <button favicon-action="faviconColor|reset" class="btn btn-sm btn-default favBadge">
+                        <button favicon-action="faviconPosition|reset" class="btn btn-sm btn-default favBadge">
                             Reset
                         </button>
                     </p>
                     <p class="text-left">
                         <pre class="text-left">var favicon=new Favico({
-    bgColor : '#5CB85C',
-    textColor : '#ff0',
+    position : 'up'
 });
 favicon.badge(3);</pre>
                     </p>
@@ -287,6 +282,28 @@ favicon.badge(1);</pre>
     elementId : 'badgeImage'
 });
 favicon.badge(2);</pre>
+                    </p>
+                </div><!-- /.col-lg-4 -->
+                <div class="col-lg-4">
+                    <h3>Color settings</h3>
+                    <span class="browser"> <img id="badgeColor" width="16" height="16" src="favicon32.ico"/> </span>
+                    <p>
+                        <button favicon-action="faviconColor|plus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconColor|minus1" class="btn btn-sm btn-default favBadge">
+                            &nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
+                        </button>
+                        <button favicon-action="faviconColor|reset" class="btn btn-sm btn-default favBadge">
+                            Reset
+                        </button>
+                    </p>
+                    <p class="text-left">
+                        <pre class="text-left">var favicon=new Favico({
+    bgColor : '#5CB85C',
+    textColor : '#ff0',
+});
+favicon.badge(3);</pre>
                     </p>
                 </div><!-- /.col-lg-4 -->
             </div>
@@ -356,9 +373,70 @@ favicon.webcam('stop');
                     </p>
                 </div><!-- /.col-lg-4 -->
             </div>
+            <h4>Badge options</h4>
+            <p>
+                <div class="table-responsive">
+                    <table class="table">
+                        <colgroup>
+                            <col class="col-lg-1">
+                            <col class="col-lg-1">
+                            <col class="col-lg-6">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Attribute</th>
+                                <th>Default</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>bgColor</td>
+                                <td>#d00</td>
+                                <td>Badge background color</td>
+                            </tr>
+                            <tr>
+                                <td>textColor</td>
+                                <td>#fff</td>
+                                <td>Badge text color</td>
+                            </tr>
+                            <tr>
+                                <td>fontFamily</td>
+                                <td>sans-serif</td>
+                                <td>Text font family (Arial, Verdana, Times New Roman, serif, sans-serif,...)</td>
+                            </tr>
+                            <tr>
+                                <td>fontStyle</td>
+                                <td>bold</td>
+                                <td>Font style (normal, italic, oblique, bold, bolder, lighter, 100, 200, 300, 400, 500, 600, 700, 800, 900)</td>
+                            </tr>
+                            <tr>
+                                <td>type</td>
+                                <td>circle</td>
+                                <td>Badge shape (circle, rectangle)</td>
+                            </tr>
+                            <tr>
+                                <td>position</td>
+                                <td>down</td>
+                                <td>Badge position (up, down)</td>
+                            </tr>
+                            <tr>
+                                <td>animation</td>
+                                <td>slide</td>
+                                <td>Badge animation type (slide, fade, pop, popFade, none )</td>
+                            </tr>
+                            <tr>
+                                <td>elementId</td>
+                                <td>false</td>
+                                <td>Image element ID if there is need to attach badge to regular image</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </p>
             <h4>Bower</h4>
             <p>
-               <pre class="text-left">bower install favico.js</pre> 
+                <pre class="text-left">bower install favico.js</pre>
             </p>
             <hr>
             <p>
@@ -387,6 +465,9 @@ favicon.webcam('stop');
                 <ul>
                     <li>
                         Don't use favicons that are on different domain than your site
+                    </li>
+                    <li>
+                        Use only one instace ( new Favico() ) of favico.js
                     </li>
                     <li>
                         Safari & IE
@@ -419,7 +500,7 @@ favicon.webcam('stop');
         <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
         <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-        <script src="favico-0.2.1.min.js"></script>
+        <script src="favico-0.3.0.min.js"></script>
         <script src="example.js"></script>
         <script>
             (function(i, s, o, g, r, a, m) {

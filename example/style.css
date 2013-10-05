@@ -26,6 +26,9 @@ body {
 	color:#444;
 	text-shadow:none;
 }
+.carousel-caption h1 small{
+	font-size: 10px;
+}
 .carousel h1 {
 	color:#444;
 }
