@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.2.3
+ * @version 0.3.0
  */
 
 /**
@@ -27,6 +27,7 @@
             fontFamily : 'sans-serif', //Arial,Verdana,Times New Roman,serif,sans-serif,...
             fontStyle : 'bold', //normal,italic,oblique,bold,bolder,lighter,100,200,300,400,500,600,700,800,900
             type : 'circle',
+            position : 'down', // down, up
             animation : 'slide',
             elementId : false
         };
@@ -44,7 +45,20 @@
             _opt = merge(_def, opt);
             _opt.bgColor = hexToRgb(_opt.bgColor);
             _opt.textColor = hexToRgb(_opt.textColor);
+            _opt.position = _opt.position.toLowerCase();
             _opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
+            //transform animation
+            if (_opt.position === 'up') {
+                for (var i = 0; i < animation.types['' + _opt.animation].length; i++) {
+                    var step = animation.types['' + _opt.animation][i];
+                    if (step.y < 0.6) {
+                        step.y = step.y - 0.4;
+                    } else {
+                        step.y = step.y - 2 * step.y + (1 - step.w);
+                    }
+                    animation.types['' + _opt.animation][i] = step;
+                }
+            }
             _opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
             try {
                 _orig = link.getIcon();
@@ -94,7 +108,10 @@
             _lastBadge = false;
             _context.clearRect(0, 0, _w, _h);
             _context.drawImage(_img, 0, 0, _w, _h);
+            //_stop=true;
             link.setIcon(_canvas);
+            //webcam('stop');
+            //video('stop');
         };
         /**
          * Start animation
@@ -732,3 +749,4 @@
     }
 
 })();
+
