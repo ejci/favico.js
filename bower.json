@@ -7,5 +7,5 @@
 	"main": "favico.js",
 	"keywords": ["favicon", "badge"],
 	"license": "MIT",
-	"ignore": ["**/.*", "node_modules", "bower_components", "test", "example", "tests"]
+	"ignore": ["**/.*", "node_modules", "bower_components", "test", "page", "example-simple", "example-angular", "tests"]
 }
