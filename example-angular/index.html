@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="app">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="Favico.js - example">
+        <meta name="author" content="Miroslav Magda">
+
+        <link rel="shortcut icon" type="image/png" href="favicon32.ico">
+
+        <title>favico.js - Make a use of your favicon</title>
+        <meta property="og:title" content="favico.js"/>
+        <meta property="og:type" content="website"/>
+        <meta property="og:url" content="http://lab.ejci.net/favico.js/"/>
+        <meta property="og:description" content="Make a use of your favicon with badges, images or videos"/>
+        <meta property="og:image" content="http://lab.ejci.net/favico.js/og-image-app.png"/>
+        <meta property="og:image:type" content="image/png"/>
+        <meta property="og:image:width" content="160"/>
+        <meta property="og:image:height" content="98"/>
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"/>
+        <!--[if lt IE 9]>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
+        <script src="//cdnjs.cloudflare.com/ajax/libs/respond.js/1.2.0/respond.js"></script>
+        <![endif]-->
+        <link href="style.css" rel="stylesheet"/>
+    </head>
+
+    <body>
+
+        <div class="navbar-wrapper">
+            <div class="container">
+
+                <div class="navbar navbar-inverse navbar-static-top">
+                    <div class="container">
+                        <div class="navbar-header">
+                            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                                <span class="icon-bar"></span>
+                            </button>
+                            <a class="navbar-brand" href="http://lab.ejci.net/favico.js/">favico.js</a>
+                        </div>
+                        <div class="navbar-collapse collapse">
+                            <ul class="nav navbar-nav">
+                                <li>
+                                    <a href="#/">View #1</a>
+                                </li>
+                                <li>
+                                    <a href="#/anotherView">View #2</a>
+                                </li>
+                            </ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li>
+                                    <a href="https://github.com/ejci/favico.js/tree/master/example-angular/"><i class="icon-code"></i> Source</a>
+                                </li>
+                                <li>
+                                    <a href="mailto:magda.miroslav@gmail.com"><i class="icon-envelope-alt"></i> Contact</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Carousel
+        ================================================== -->
+        <div class="container" ng-view></div>
+
+        <!-- Bootstrap core JavaScript
+        ================================================== -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+        <script src="//ajax.googleapis.com/ajax/libs/angularjs/1.0.8/angular.min.js"></script>
+        <script src="favico-0.3.0.min.js"></script>
+
+        <!--AngularJS example app -->
+        <script src="app.js"></script>
+        <script src="controllers.js"></script>
+        <script src="favicoService.js"></script>
+
+    </body>
+</html>
