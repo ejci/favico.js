@@ -1,4 +1,4 @@
-#favico.js.
+#favico.js
 More info [here](http://lab.ejci.net/favico.js/).
 
 
