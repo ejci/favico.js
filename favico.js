@@ -33,6 +33,13 @@
         };
         var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser;
 
+        _browser = {};
+        _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
+        _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
+        _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
+        _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
+        _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
+
         var _queue = [];
         _readyCb = function() {
         };
@@ -66,24 +73,25 @@
                 _canvas = document.createElement('canvas');
                 //create temp image
                 _img = document.createElement('img');
-                _img.setAttribute('src', _orig.getAttribute('href'));
-                //get width/height
-                _img.onload = function() {
-                    _h = (_img.height > 0) ? _img.height : 32;
-                    _w = (_img.width > 0) ? _img.width : 32;
-                    _canvas.height = _h;
-                    _canvas.width = _w;
+                if (_orig.hasAttribute('href')) {
+                    _img.setAttribute('src', _orig.getAttribute('href'));
+                    //get width/height
+                    _img.onload = function() {
+                        _h = (_img.height > 0) ? _img.height : 32;
+                        _w = (_img.width > 0) ? _img.width : 32;
+                        _canvas.height = _h;
+                        _canvas.width = _w;
+                        _context = _canvas.getContext('2d');
+                        icon.ready();
+                    };
+                } else {
+                    _canvas.height = 32;
+                    _canvas.width = 32;
                     _context = _canvas.getContext('2d');
                     icon.ready();
-                };
-                _browser = {};
-                _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
-                _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
-                _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
-                _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
-                _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
+                }
             } catch(e) {
-                throw 'Error initializing favico...';
+                throw 'Error initializing favico. Message: ' + e.message;
             }
 
         };
@@ -253,7 +261,7 @@
                         icon.reset();
                     }
                 } catch(e) {
-                    throw 'Error setting badge...';
+                    throw 'Error setting badge. Message: ' + e.message;
                 }
             };
             if (_ready) {
@@ -748,4 +756,3 @@
     }
 
 })();
-
