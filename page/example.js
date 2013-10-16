@@ -2,7 +2,6 @@ $(document).ready(function() {
     window.favicon = new Favico({
         animation : 'popFade'
     });
-
     window.faviconMirror = new Favico({
         animation : 'popFade',
         elementId : 'badgeMirror'

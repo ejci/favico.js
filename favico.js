@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.0
+ * @version 0.3.1
  */
 
 /**
@@ -73,7 +73,7 @@
                 _canvas = document.createElement('canvas');
                 //create temp image
                 _img = document.createElement('img');
-                if (_orig.hasAttribute('href') || _orig.hasAttribute('src')) {
+                if (_orig.hasAttribute('href')) {
                     _img.setAttribute('src', _orig.getAttribute('href'));
                     //get width/height
                     _img.onload = function() {
@@ -86,8 +86,12 @@
                     };
                 } else {
                     _img.setAttribute('src', '');
-                    _canvas.height = 32;
-                    _canvas.width = 32;
+                    _h = 32;
+                    _w = 32;
+                    _img.height = _h;
+                    _img.width = _w;
+                    _canvas.height = _h;
+                    _canvas.width = _w;
                     _context = _canvas.getContext('2d');
                     icon.ready();
                 }
