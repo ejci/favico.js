@@ -73,7 +73,7 @@
                 _canvas = document.createElement('canvas');
                 //create temp image
                 _img = document.createElement('img');
-                if (_orig.hasAttribute('href')) {
+                if (_orig.hasAttribute('href') || _orig.hasAttribute('src')) {
                     _img.setAttribute('src', _orig.getAttribute('href'));
                     //get width/height
                     _img.onload = function() {
@@ -85,6 +85,7 @@
                         icon.ready();
                     };
                 } else {
+                    _img.setAttribute('src', '');
                     _canvas.height = 32;
                     _canvas.width = 32;
                     _context = _canvas.getContext('2d');
@@ -254,7 +255,7 @@
                             }
                         });
                         if (_queue.length > 100) {
-                            throw 'Too many badges requests in queue...';
+                            throw 'Too many badges requests in queue.';
                         }
                         icon.start();
                     } else {
@@ -286,7 +287,7 @@
                     _context.drawImage(newImg, 0, 0, _w, _h);
                     link.setIcon(_canvas);
                 } catch(e) {
-                    throw 'Error setting image...';
+                    throw 'Error setting image. Message: ' + e.message;
                 }
             };
             if (_ready) {
@@ -313,7 +314,7 @@
                     }, false);
 
                 } catch(e) {
-                    throw 'Error setting video...';
+                    throw 'Error setting video. Message: ' + e.message;
                 }
             };
             if (_ready) {
@@ -355,7 +356,7 @@
                         }, function() {
                         });
                     } catch(e) {
-                        throw 'Error setting webcam...';
+                        throw 'Error setting webcam. Message: ' + e.message;
                     }
                 };
                 if (_ready) {
