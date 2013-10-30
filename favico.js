@@ -177,15 +177,20 @@
          */
         type.circle = function(opt) {
             opt = options(opt);
-            var more = opt.n > 9;
-            if (more) {
+            var more = false;
+            if (opt.n > 9 && opt.n < 100) {
                 opt.x = opt.x - opt.w * 0.4;
                 opt.w = opt.w * 1.4;
+                more = true;
+            } else if (opt.n >= 100) {
+                opt.x = opt.x - opt.w * 0.5;
+                opt.w = opt.w * 1.3;
+                more = true;
             }
             _context.clearRect(0, 0, _w, _h);
             _context.drawImage(_img, 0, 0, _w, _h);
             _context.beginPath();
-            _context.font = _opt.fontStyle + " " + Math.floor(opt.h * (more > 99 ? 0.75 : 1)) + "px " + _opt.fontFamily;
+            _context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.9 : 1)) + "px " + _opt.fontFamily;
             _context.textAlign = 'center';
             if (more) {
                 _context.moveTo(opt.x + opt.w / 2, opt.y);
@@ -220,22 +225,27 @@
          */
         type.rectangle = function(opt) {
             opt = options(opt);
-            var more = opt.n > 9;
-            if (more) {
-                opt.x = Math.floor(opt.x - opt.w * 0.4);
-                opt.w = Math.floor(opt.w * 1.4);
+            var more = false;
+            if (opt.n > 9 && opt.n < 100) {
+                opt.x = opt.x - opt.w * 0.4;
+                opt.w = opt.w * 1.4;
+                more = true;
+            } else if (opt.n >= 100) {
+                opt.x = opt.x - opt.w * 0.5;
+                opt.w = opt.w * 1.3;
+                more = true;
             }
             _context.clearRect(0, 0, _w, _h);
             _context.drawImage(_img, 0, 0, _w, _h);
             _context.beginPath();
-            _context.font = "bold " + Math.floor(opt.h * (more > 99 ? 0.75 : 1)) + "px sans-serif";
+            _context.font = "bold " + Math.floor(opt.h * (opt.n > 99 ? 0.9 : 1)) + "px sans-serif";
             _context.textAlign = 'center';
             _context.fillStyle = 'rgba(' + _opt.bgColor.r + ',' + _opt.bgColor.g + ',' + _opt.bgColor.b + ',' + opt.o + ')';
             _context.fillRect(opt.x, opt.y, opt.w, opt.h);
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-            if (opt.n > 99) {
-                _context.fillText('∞', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+            if (opt.n > 999) {
+                _context.fillText('1k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             }
