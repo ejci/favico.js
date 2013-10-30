@@ -3,12 +3,15 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.3.1
+Version 0.3.2
 
 ##License
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ###Change log
+####0.3.2
+* support for badge numbers bigger than 999
+
 ####0.3.1
 * bugfix if <link type="icon"...> is missing
 

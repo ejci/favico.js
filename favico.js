@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.1
+ * @version 0.3.2
  */
 
 /**
@@ -183,14 +183,14 @@
                 opt.w = opt.w * 1.4;
                 more = true;
             } else if (opt.n >= 100) {
-                opt.x = opt.x - opt.w * 0.5;
-                opt.w = opt.w * 1.3;
+                opt.x = opt.x - opt.w * 0.65;
+                opt.w = opt.w * 1.65;
                 more = true;
             }
             _context.clearRect(0, 0, _w, _h);
             _context.drawImage(_img, 0, 0, _w, _h);
             _context.beginPath();
-            _context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.9 : 1)) + "px " + _opt.fontFamily;
+            _context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.85 : 1)) + "px " + _opt.fontFamily;
             _context.textAlign = 'center';
             if (more) {
                 _context.moveTo(opt.x + opt.w / 2, opt.y);
@@ -213,7 +213,7 @@
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             if (opt.n > 999) {
-                _context.fillText('1k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+                _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             }
@@ -231,8 +231,8 @@
                 opt.w = opt.w * 1.4;
                 more = true;
             } else if (opt.n >= 100) {
-                opt.x = opt.x - opt.w * 0.5;
-                opt.w = opt.w * 1.3;
+                opt.x = opt.x - opt.w * 0.65;
+                opt.w = opt.w * 1.65;
                 more = true;
             }
             _context.clearRect(0, 0, _w, _h);
@@ -245,7 +245,7 @@
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             if (opt.n > 999) {
-                _context.fillText('1k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+                _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
             }
