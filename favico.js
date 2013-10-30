@@ -481,6 +481,14 @@
         }
 
         /**
+         * Cross-browser page visibility shim
+         * http://stackoverflow.com/questions/12536562/detect-whether-a-window-is-visible
+         */
+        function isPageHidden(){
+            return document.hidden || document.msHidden || document.webkitHidden || document.mozHidden;
+        }
+
+        /**
          * @namespace animation
          */
         var animation = {};
@@ -709,7 +717,7 @@
          * @param {Object} step Optional step number (frame bumber)
          */
         animation.run = function(opt, cb, revert, step) {
-            var animationType = animation.types[_opt.animation];
+            var animationType = animation.types[isPageHidden() ? 'none' : _opt.animation];
             if (revert === true) {
                 step = ( typeof step !== 'undefined') ? step : animationType.length - 1;
             } else {
