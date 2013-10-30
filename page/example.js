@@ -130,7 +130,7 @@ $(document).ready(function() {
     setTimeout(function() {
         window.val_favicon = 3;
         window.favicon.badge(window.val_favicon);
-        window.val_faviconMirror = 33333;
+        window.val_faviconMirror = 3;
         window.faviconMirror.badge(window.val_faviconMirror);
     }, 1000);
     setTimeout(function() {
