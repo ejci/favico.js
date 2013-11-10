@@ -470,7 +470,12 @@ favicon.webcam('stop');
             <p>
                 <ul>
                     <li>
-                        Don't use favicons that are on different domain than your site
+                        Don't use favicons that are on different domain than your site<br />
+                        <small>If your page is on <b>http://example.com</b> your favicon needs to be also on <b>http://example.com/favico.ico</b> (not http://static.example.com or http://cdn.example.com).</small> 
+                    </li>
+                    <li>
+                        Bookmark problem <a href="https://github.com/ejci/favico.js/issues/23">Issue #23</a><br/>
+                        <small>Sollution: Attach favico reset method on page unload event</small> 
                     </li>
                     <li>
                         Use only one instace ( new Favico() ) of favico.js
