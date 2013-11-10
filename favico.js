@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.2
+ * @version 0.3.3
  */
 
 /**
@@ -13,6 +13,9 @@
  * var favico = new Favico({
  *    bgColor : '#d00',
  *    textColor : '#fff',
+ *    fontFamily : 'sans-serif',
+ *    fontStyle : 'bold',
+ *    position : 'down',
  *    type : 'circle',
  *    animation : 'slide',
  * });
@@ -418,6 +421,10 @@
                 //if img element identified by elementId
                 elm = document.getElementById(_opt.elementId);
                 elm.setAttribute('href', elm.getAttribute('src'));
+                if ((elm.src + '').indexOf(document.location.hostname) === -1) {
+                    throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + elm.href + ', Domain: ' + document.location.hostname + ')');
+                }
+
             } else {
                 //if link element
                 elm = getLink();
@@ -426,6 +433,10 @@
                     elm.setAttribute('rel', 'icon');
                     document.getElementsByTagName('head')[0].appendChild(elm);
                 }
+                if ((elm.href + '').indexOf(document.location.hostname) === -1) {
+                    throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + elm.href + ', Domain: ' + document.location.hostname + ')');
+                }
+
             }
             elm.setAttribute('type', 'image/png');
             //misspelled "image"
@@ -494,7 +505,7 @@
          * Cross-browser page visibility shim
          * http://stackoverflow.com/questions/12536562/detect-whether-a-window-is-visible
          */
-        function isPageHidden(){
+        function isPageHidden() {
             return document.hidden || document.msHidden || document.webkitHidden || document.mozHidden;
         }
 
