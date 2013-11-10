@@ -407,6 +407,7 @@
          */
         link.getIcon = function() {
             var elm = false;
+            var url = '';
             //get link element
             var getLink = function() {
                 var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
@@ -421,10 +422,6 @@
                 //if img element identified by elementId
                 elm = document.getElementById(_opt.elementId);
                 elm.setAttribute('href', elm.getAttribute('src'));
-                if ((elm.src + '').indexOf(document.location.hostname) === -1) {
-                    throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + elm.href + ', Domain: ' + document.location.hostname + ')');
-                }
-
             } else {
                 //if link element
                 elm = getLink();
@@ -433,13 +430,13 @@
                     elm.setAttribute('rel', 'icon');
                     document.getElementsByTagName('head')[0].appendChild(elm);
                 }
-                if ((elm.href + '').indexOf(document.location.hostname) === -1) {
-                    throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + elm.href + ', Domain: ' + document.location.hostname + ')');
-                }
-
+            }
+            //check if image and link url is on same domain. if not raise error
+            url = (_opt.elementId) ? elm.src : elm.href;
+            if (url.indexOf(document.location.hostname) === -1) {
+                throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + url + ', Domain: ' + document.location.hostname + ')');
             }
             elm.setAttribute('type', 'image/png');
-            //misspelled "image"
             return elm;
         };
         link.setIcon = function(canvas) {
