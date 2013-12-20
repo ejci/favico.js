@@ -57,15 +57,31 @@
             _opt.textColor = hexToRgb(_opt.textColor);
             _opt.position = _opt.position.toLowerCase();
             _opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
+
+            var isUp   = _opt.position.indexOf('up') > -1;
+            var isLeft = _opt.position.indexOf('left') > -1;
+
             //transform animation
-            if (_opt.position === 'up') {
+            if (isUp || isLeft) {
                 for (var i = 0; i < animation.types['' + _opt.animation].length; i++) {
                     var step = animation.types['' + _opt.animation][i];
-                    if (step.y < 0.6) {
+
+                    if (isUp) {
+                      if (step.y < 0.6) {
                         step.y = step.y - 0.4;
-                    } else {
+                      } else {
                         step.y = step.y - 2 * step.y + (1 - step.w);
+                      }
                     }
+
+                    if (isLeft) {
+                      if (step.x < 0.6) {
+                        step.x = step.x - 0.4;
+                      } else {
+                        step.x = step.x - 2 * step.x + (1 - step.h);
+                      }
+                    }
+
                     animation.types['' + _opt.animation][i] = step;
                 }
             }
