@@ -6,11 +6,11 @@ Author [Miroslav Magda](http://blog.ejci.net)
 Version 0.3.4
 
 Contributors:
-[pissflaps](https://github.com/pissflaps)
-[Yaroslav Yakovlev](https://github.com/yaroslavya)
-[LoicMahieu](https://github.com/LoicMahieu)
-[Renan Gonçalves](https://github.com/renan)
-[Adam Savitzky](https://github.com/adambom)
+[pissflaps](https://github.com/pissflaps),
+[Yaroslav Yakovlev](https://github.com/yaroslavya),
+[LoicMahieu](https://github.com/LoicMahieu),
+[Renan Gonçalves](https://github.com/renan),
+[Adam Savitzky](https://github.com/adambom),
 [Jory Graham](https://github.com/jorygraham)
 
 
