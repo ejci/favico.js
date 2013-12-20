@@ -6,6 +6,7 @@ Author [Miroslav Magda](http://blog.ejci.net)
 Version 0.3.4
 
 Contributors:
+[Serge Barysiuk](https://github.com/sbarysiuk),
 [pissflaps](https://github.com/pissflaps),
 [Yaroslav Yakovlev](https://github.com/yaroslavya),
 [LoicMahieu](https://github.com/LoicMahieu),
