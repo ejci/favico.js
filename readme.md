@@ -3,12 +3,24 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.3.3
+Version 0.3.4
+
+Contributors:
+[pissflaps](https://github.com/pissflaps)
+[Yaroslav Yakovlev](https://github.com/yaroslavya)
+[LoicMahieu](https://github.com/LoicMahieu)
+[Renan Gonçalves](https://github.com/renan)
+[Adam Savitzky](https://github.com/adambom)
+[Jory Graham](https://github.com/jorygraham)
+
 
 ##License
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ###Change log
+####0.3.4
+* new option for position
+
 ####0.3.3
 * bugfixes
 

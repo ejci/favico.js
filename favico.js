@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.3
+ * @version 0.3.4
  */
 
 /**
@@ -30,7 +30,7 @@
             fontFamily : 'sans-serif', //Arial,Verdana,Times New Roman,serif,sans-serif,...
             fontStyle : 'bold', //normal,italic,oblique,bold,bolder,lighter,100,200,300,400,500,600,700,800,900
             type : 'circle',
-            position : 'down', // down, up
+            position : 'down', // down, up, left, leftup (upleft)
             animation : 'slide',
             elementId : false
         };
@@ -58,7 +58,7 @@
             _opt.position = _opt.position.toLowerCase();
             _opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
 
-            var isUp   = _opt.position.indexOf('up') > -1;
+            var isUp = _opt.position.indexOf('up') > -1;
             var isLeft = _opt.position.indexOf('left') > -1;
 
             //transform animation
@@ -67,19 +67,19 @@
                     var step = animation.types['' + _opt.animation][i];
 
                     if (isUp) {
-                      if (step.y < 0.6) {
-                        step.y = step.y - 0.4;
-                      } else {
-                        step.y = step.y - 2 * step.y + (1 - step.w);
-                      }
+                        if (step.y < 0.6) {
+                            step.y = step.y - 0.4;
+                        } else {
+                            step.y = step.y - 2 * step.y + (1 - step.w);
+                        }
                     }
 
                     if (isLeft) {
-                      if (step.x < 0.6) {
-                        step.x = step.x - 0.4;
-                      } else {
-                        step.x = step.x - 2 * step.x + (1 - step.h);
-                      }
+                        if (step.x < 0.6) {
+                            step.x = step.x - 0.4;
+                        } else {
+                            step.x = step.x - 2 * step.x + (1 - step.h);
+                        }
                     }
 
                     animation.types['' + _opt.animation][i] = step;
