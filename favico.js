@@ -428,7 +428,7 @@
             var getLink = function() {
                 var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
                 for (var l = link.length, i = (l - 1); i >= 0; i--) {
-                    if ((/icon/i).test(link[i].getAttribute('rel'))) {
+                    if ((/(^|\s)icon(\s|$)/i).test(link[i].getAttribute('rel'))) {
                         return link[i];
                     }
                 }
