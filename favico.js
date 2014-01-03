@@ -164,16 +164,24 @@
             };
             if (_queue.length > 0) {
                 _running = true;
-                if (_lastBadge) {
-                    animation.run(_lastBadge.options, function() {
-                        animation.run(_queue[0].options, function() {
-                            finished();
-                        }, false);
-                    }, true);
-                } else {
+                var run = function() {
+                    // apply options for this animation
+                    ['type', 'animation', 'bgColor', 'textColor',
+                     'fontFamily', 'fontStyle'].forEach(function(a) {
+                        if (a in _queue[0].options) {
+                            _opt[a] = _queue[0].options[a];
+                        }
+                    });
                     animation.run(_queue[0].options, function() {
                         finished();
                     }, false);
+                };
+                if (_lastBadge) {
+                    animation.run(_lastBadge.options, function() {
+                        run();
+                    }, true);
+                } else {
+                    run();
                 }
             }
         };
@@ -275,19 +283,35 @@
         /**
          * Set badge
          */
-        var badge = function(number, animType) {
+        var badge = function(number, opts) {
+            opts = ((typeof opts)==='string' ? {animation:opts} : opts) || {};
             _readyCb = function() {
                 try {
                     if (typeof(number)==='number' ? (number > 0) : (number !== '')) {
-                        if (animation.types['' + animType]) {
-                            _opt.animation = animType;
-                        }
-                        _queue.push({
+                        var q = {
                             type : 'badge',
                             options : {
                                 n : number
                             }
+                        };
+                        if ('animation' in opts &&
+                            animation.types['' + opts.animation]) {
+                            q.options.animation = '' + opts.animation;
+                        }
+                        if ('type' in opts && type['' + opts.type]) {
+                            q.options.type = '' + opts.type;
+                        }
+                        ['bgColor', 'textColor'].forEach(function(o) {
+                            if (o in opts) {
+                                q.options[o] = hexToRgb(opts[o]);
+                            }
                         });
+                        ['fontStyle', 'fontFamily'].forEach(function(o) {
+                            if (o in opts) {
+                                q.options[o] = opts[o];
+                            }
+                        });
+                        _queue.push(q);
                         if (_queue.length > 100) {
                             throw 'Too many badges requests in queue.';
                         }
