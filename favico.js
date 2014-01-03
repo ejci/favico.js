@@ -183,11 +183,12 @@
          */
         var type = {};
         var options = function(opt) {
-            opt.n = Math.abs(opt.n);
+            opt.n = ((typeof opt.n)==='number') ? Math.abs(opt.n|0) : opt.n;
             opt.x = _w * opt.x;
             opt.y = _h * opt.y;
             opt.w = _w * opt.w;
             opt.h = _h * opt.h;
+            opt.len = ("" + opt.n).length;
             return opt;
         };
         /**
@@ -197,11 +198,11 @@
         type.circle = function(opt) {
             opt = options(opt);
             var more = false;
-            if (opt.n > 9 && opt.n < 100) {
+            if (opt.len === 2) {
                 opt.x = opt.x - opt.w * 0.4;
                 opt.w = opt.w * 1.4;
                 more = true;
-            } else if (opt.n >= 100) {
+            } else if (opt.len >= 3) {
                 opt.x = opt.x - opt.w * 0.65;
                 opt.w = opt.w * 1.65;
                 more = true;
@@ -231,7 +232,7 @@
             _context.stroke();
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-            if (opt.n > 999) {
+            if ((typeof opt.n)==='number' && opt.n > 999) {
                 _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
@@ -245,11 +246,11 @@
         type.rectangle = function(opt) {
             opt = options(opt);
             var more = false;
-            if (opt.n > 9 && opt.n < 100) {
+            if (opt.len === 2) {
                 opt.x = opt.x - opt.w * 0.4;
                 opt.w = opt.w * 1.4;
                 more = true;
-            } else if (opt.n >= 100) {
+            } else if (opt.len >= 3) {
                 opt.x = opt.x - opt.w * 0.65;
                 opt.w = opt.w * 1.65;
                 more = true;
@@ -263,7 +264,7 @@
             _context.fillRect(opt.x, opt.y, opt.w, opt.h);
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-            if (opt.n > 999) {
+            if ((typeof opt.n)==='number' && opt.len > 3) {
                 _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
@@ -277,7 +278,7 @@
         var badge = function(number, animType) {
             _readyCb = function() {
                 try {
-                    if (number > 0) {
+                    if (typeof(number)==='number' ? (number > 0) : (number !== '')) {
                         if (animation.types['' + animType]) {
                             _opt.animation = animType;
                         }
