@@ -34,7 +34,7 @@
             animation : 'slide',
             elementId : false
         };
-        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser;
+        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
 
         _browser = {};
         _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
@@ -144,6 +144,8 @@
             link.setIcon(_canvas);
             //webcam('stop');
             //video('stop');
+            window.clearTimeout(_animTimeout);
+            window.clearTimeout(_drawTimeout);
         };
         /**
          * Start animation
@@ -438,7 +440,7 @@
             } catch(e) {
 
             }
-            setTimeout(drawVideo, animation.duration, video);
+            _drawTimeout = setTimeout(drawVideo, animation.duration, video);
             link.setIcon(_canvas);
         }
 
@@ -786,7 +788,7 @@
             };
             if ((step < animationType.length) && (step >= 0)) {
                 type[_opt.type](merge(opt, animationType[step]));
-                setTimeout(function() {
+                _animTimeout = setTimeout(function() {
                     if (revert) {
                         step = step - 1;
                     } else {
