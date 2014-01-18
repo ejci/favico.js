@@ -34,15 +34,16 @@
             animation : 'slide',
             elementId : false
         };
-        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser;
+        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
 
         _browser = {};
-        _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
-        _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
-        _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
-        _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
+        _browser.ff = typeof InstallTrigger != 'undefined';
+        _browser.chrome = !!window.chrome;
+        _browser.opera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
+        _browser.ie = /*@cc_on!@*/ false;
+        _browser.safari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
         _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
-
+    
         var _queue = [];
         _readyCb = function() {
         };
@@ -144,6 +145,8 @@
             link.setIcon(_canvas);
             //webcam('stop');
             //video('stop');
+            window.clearTimeout(_animTimeout);
+            window.clearTimeout(_drawTimeout);
         };
         /**
          * Start animation
@@ -438,7 +441,7 @@
             } catch(e) {
 
             }
-            setTimeout(drawVideo, animation.duration, video);
+            _drawTimeout = setTimeout(drawVideo, animation.duration, video);
             link.setIcon(_canvas);
         }
 
@@ -786,7 +789,7 @@
             };
             if ((step < animationType.length) && (step >= 0)) {
                 type[_opt.type](merge(opt, animationType[step]));
-                setTimeout(function() {
+                _animTimeout = setTimeout(function() {
                     if (revert) {
                         step = step - 1;
                     } else {
@@ -808,7 +811,10 @@
             video : video,
             image : image,
             webcam : webcam,
-            reset : icon.reset
+            reset : icon.reset,
+            browser: {
+               supported: _browser.supported
+            }
         };
     });
 
@@ -828,3 +834,5 @@
     }
 
 })();
+
+
