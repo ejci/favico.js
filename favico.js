@@ -135,15 +135,12 @@
          * Reset icon to default state
          */
         icon.reset = function() {
-            //reset
             _queue = [];
+            _running = false;
             _lastBadge = false;
             _context.clearRect(0, 0, _w, _h);
             _context.drawImage(_img, 0, 0, _w, _h);
-            //_stop=true;
             link.setIcon(_canvas);
-            //webcam('stop');
-            //video('stop');
             window.clearTimeout(_animTimeout);
             window.clearTimeout(_drawTimeout);
         };
