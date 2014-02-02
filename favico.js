@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.4
+ * @version 0.4.0
  */
 
 /**
@@ -23,6 +23,7 @@
 (function() {
 
     var Favico = (function(opt) {'use strict';
+        var _version = '0.4.0';
         opt = (opt) ? opt : {};
         var _def = {
             bgColor : '#d00',
@@ -32,18 +33,18 @@
             type : 'circle',
             position : 'down', // down, up, left, leftup (upleft)
             animation : 'slide',
+            fallbackUrl : '//favico.jit.su/image',
             elementId : false
         };
-        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
+        var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastFrame, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
 
         _browser = {};
-        _browser.ff = typeof InstallTrigger != 'undefined';
-        _browser.chrome = !!window.chrome;
-        _browser.opera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
-        _browser.ie = /*@cc_on!@*/ false;
+        _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
+        _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
+        _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
+        _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
         _browser.safari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
         _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
-    
         var _queue = [];
         _readyCb = function() {
         };
@@ -54,8 +55,10 @@
         var init = function() {
             //merge initial options
             _opt = merge(_def, opt);
+
             _opt.bgColor = hexToRgb(_opt.bgColor);
             _opt.textColor = hexToRgb(_opt.textColor);
+
             _opt.position = _opt.position.toLowerCase();
             _opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
 
@@ -87,32 +90,37 @@
                 }
             }
             _opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
+
             try {
                 _orig = link.getIcon();
-                //create temp canvas
-                _canvas = document.createElement('canvas');
-                //create temp image
-                _img = document.createElement('img');
-                if (_orig.hasAttribute('href')) {
-                    _img.setAttribute('src', _orig.getAttribute('href'));
-                    //get width/height
-                    _img.onload = function() {
-                        _h = (_img.height > 0) ? _img.height : 32;
-                        _w = (_img.width > 0) ? _img.width : 32;
+                if (_browser.supported) {
+                    //create temp canvas
+                    _canvas = document.createElement('canvas');
+                    //create temp image
+                    _img = document.createElement('img');
+                    if (_orig.hasAttribute('href')) {
+                        _img.setAttribute('src', _orig.getAttribute('href'));
+                        //get width/height
+                        _img.onload = function() {
+                            _h = (_img.height > 0) ? _img.height : 32;
+                            _w = (_img.width > 0) ? _img.width : 32;
+                            _canvas.height = _h;
+                            _canvas.width = _w;
+                            _context = _canvas.getContext('2d');
+                            icon.ready();
+                        };
+                    } else {
+                        _img.setAttribute('src', '');
+                        _h = 32;
+                        _w = 32;
+                        _img.height = _h;
+                        _img.width = _w;
                         _canvas.height = _h;
                         _canvas.width = _w;
                         _context = _canvas.getContext('2d');
                         icon.ready();
-                    };
+                    }
                 } else {
-                    _img.setAttribute('src', '');
-                    _h = 32;
-                    _w = 32;
-                    _img.height = _h;
-                    _img.width = _w;
-                    _canvas.height = _h;
-                    _canvas.width = _w;
-                    _context = _canvas.getContext('2d');
                     icon.ready();
                 }
             } catch(e) {
@@ -132,16 +140,21 @@
             icon.reset();
             _readyCb();
         };
+
         /**
          * Reset icon to default state
          */
         icon.reset = function() {
             _queue = [];
             _running = false;
-            _lastBadge = false;
-            _context.clearRect(0, 0, _w, _h);
-            _context.drawImage(_img, 0, 0, _w, _h);
-            link.setIcon(_canvas);
+            _lastFrame = false;
+            if (_browser.supported) {
+                _context.clearRect(0, 0, _w, _h);
+                _context.drawImage(_img, 0, 0, _w, _h);
+                link.setIcon(_canvas);
+            } else {
+                link.setIcon();
+            }
             window.clearTimeout(_animTimeout);
             window.clearTimeout(_drawTimeout);
         };
@@ -153,7 +166,7 @@
                 return;
             }
             var finished = function() {
-                _lastBadge = _queue[0];
+                _lastFrame = _queue[0];
                 _running = false;
                 if (_queue.length > 0) {
                     _queue.shift();
@@ -166,9 +179,8 @@
                 _running = true;
                 var run = function() {
                     // apply options for this animation
-                    ['type', 'animation', 'bgColor', 'textColor',
-                     'fontFamily', 'fontStyle'].forEach(function(a) {
-                        if (a in _queue[0].options) {
+                    forEach(['type', 'animation', 'bgColor', 'textColor', 'fontFamily', 'fontStyle'], function(a) {
+                        if ( a in _queue[0].options) {
                             _opt[a] = _queue[0].options[a];
                         }
                     });
@@ -176,8 +188,8 @@
                         finished();
                     }, false);
                 };
-                if (_lastBadge) {
-                    animation.run(_lastBadge.options, function() {
+                if (_lastFrame) {
+                    animation.run(_lastFrame.options, function() {
                         run();
                     }, true);
                 } else {
@@ -191,7 +203,7 @@
          */
         var type = {};
         var options = function(opt) {
-            opt.n = ((typeof opt.n)==='number') ? Math.abs(opt.n|0) : opt.n;
+            opt.n = (( typeof opt.n) === 'number') ? Math.abs(opt.n | 0) : opt.n;
             opt.x = _w * opt.x;
             opt.y = _h * opt.y;
             opt.w = _w * opt.w;
@@ -240,7 +252,7 @@
             _context.stroke();
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-            if ((typeof opt.n)==='number' && opt.n > 999) {
+            if (( typeof opt.n) === 'number' && opt.n > 999) {
                 _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
@@ -272,7 +284,7 @@
             _context.fillRect(opt.x, opt.y, opt.w, opt.h);
             _context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
             //_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-            if ((typeof opt.n)==='number' && opt.n > 999) {
+            if (( typeof opt.n) === 'number' && opt.n > 999) {
                 _context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
             } else {
                 _context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
@@ -284,30 +296,31 @@
          * Set badge
          */
         var badge = function(number, opts) {
-            opts = ((typeof opts)==='string' ? {animation:opts} : opts) || {};
+            opts = (( typeof opts) === 'string' ? {
+                animation : opts
+            } : opts) || {};
             _readyCb = function() {
                 try {
-                    if (typeof(number)==='number' ? (number > 0) : (number !== '')) {
+                    if ( typeof (number) === 'number' ? (number > 0) : (number !== '')) {
                         var q = {
                             type : 'badge',
                             options : {
                                 n : number
                             }
                         };
-                        if ('animation' in opts &&
-                            animation.types['' + opts.animation]) {
+                        if ('animation' in opts && animation.types['' + opts.animation]) {
                             q.options.animation = '' + opts.animation;
                         }
                         if ('type' in opts && type['' + opts.type]) {
                             q.options.type = '' + opts.type;
                         }
-                        ['bgColor', 'textColor'].forEach(function(o) {
-                            if (o in opts) {
+                        forEach(['bgColor', 'textColor'], function(o) {
+                            if ( o in opts) {
                                 q.options[o] = hexToRgb(opts[o]);
                             }
                         });
-                        ['fontStyle', 'fontFamily'].forEach(function(o) {
-                            if (o in opts) {
+                        forEach(['fontStyle', 'fontFamily'], function(o) {
+                            if ( o in opts) {
                                 q.options[o] = opts[o];
                             }
                         });
@@ -323,8 +336,18 @@
                     throw 'Error setting badge. Message: ' + e.message;
                 }
             };
-            if (_ready) {
-                _readyCb();
+            if (_browser.supported) {
+                if (_ready) {
+                    _readyCb();
+                }
+            } else {
+                _opt.url = _orig.getAttribute('x-orig-src');
+                _opt.badge = number;
+                merge(_opt, opt);
+                _orig.href = _opt.fallbackUrl + '?options=' + encodeURIComponent(JSON.stringify(_opt)) + '&v=' + _version;
+                _orig.src = _orig.href;
+                console.log('_orig', _orig, _orig.href);
+
             }
         };
 
@@ -348,35 +371,44 @@
                     throw 'Error setting image. Message: ' + e.message;
                 }
             };
-            if (_ready) {
-                _readyCb();
+            if (_browser.supported) {
+                if (_ready) {
+                    _readyCb();
+                }
+            } else {
+                _opt.url = _orig.getAttribute('x-orig-src');
+                _opt.badge = number;
+                merge(_opt, opt);
+                imageElement.src = _opt.fallbackUrl + '?options=' + encodeURIComponent(JSON.stringify(_opt));
             }
         };
         /**
          * Set video as icon
          */
         var video = function(videoElement) {
-            _readyCb = function() {
-                try {
-                    if (videoElement === 'stop') {
-                        _stop = true;
-                        icon.reset();
-                        _stop = false;
-                        return;
-                    }
-                    //var w = videoElement.width;
-                    //var h = videoElement.height;
-                    //var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
-                    videoElement.addEventListener('play', function() {
-                        drawVideo(this);
-                    }, false);
+            if (_browser.supported) {
+                _readyCb = function() {
+                    try {
+                        if (videoElement === 'stop') {
+                            _stop = true;
+                            icon.reset();
+                            _stop = false;
+                            return;
+                        }
+                        //var w = videoElement.width;
+                        //var h = videoElement.height;
+                        //var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
+                        videoElement.addEventListener('play', function() {
+                            drawVideo(this);
+                        }, false);
 
-                } catch(e) {
-                    throw 'Error setting video. Message: ' + e.message;
+                    } catch(e) {
+                        throw 'Error setting video. Message: ' + e.message;
+                    }
+                };
+                if (_ready) {
+                    _readyCb();
                 }
-            };
-            if (_ready) {
-                _readyCb();
             }
         };
         /**
@@ -462,7 +494,8 @@
             if (_opt.elementId) {
                 //if img element identified by elementId
                 elm = document.getElementById(_opt.elementId);
-                elm.setAttribute('href', elm.getAttribute('src'));
+                elm.setAttribute('href', elm.src);
+                elm.setAttribute('x-orig-src', elm.src);
             } else {
                 //if link element
                 elm = getLink();
@@ -471,41 +504,45 @@
                     elm.setAttribute('rel', 'icon');
                     document.getElementsByTagName('head')[0].appendChild(elm);
                 }
+                elm.setAttribute('x-orig-src', elm.href);
             }
             //check if image and link url is on same domain. if not raise error
             url = (_opt.elementId) ? elm.src : elm.href;
-            if (url.substr(0, 5) !== 'data:' && url.indexOf(document.location.hostname) === -1) {
+            if (_browser.supported && url.substr(0, 5) !== 'data:' && url.indexOf(document.location.hostname) === -1) {
                 throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + url + ', Domain: ' + document.location.hostname + ')');
             }
             elm.setAttribute('type', 'image/png');
             return elm;
         };
         link.setIcon = function(canvas) {
-            var url = canvas.toDataURL('image/png');
-            if (_opt.elementId) {
-                //if is attached to element (image)
-                document.getElementById(_opt.elementId).setAttribute('src', url);
-            } else {
-                //if is attached to fav icon
-                if (_browser.ff || _browser.opera) {
-                    //for FF we need to "recreate" element, atach to dom and remove old <link>
-                    //var originalType = _orig.getAttribute('rel');
-                    var old = _orig;
-                    _orig = document.createElement('link');
-                    //_orig.setAttribute('rel', originalType);
-                    if (_browser.opera) {
-                        _orig.setAttribute('rel', 'icon');
-                    }
-                    _orig.setAttribute('rel', 'icon');
-                    _orig.setAttribute('type', 'image/png');
-                    document.getElementsByTagName('head')[0].appendChild(_orig);
-                    _orig.setAttribute('href', url);
-                    if (old.parentNode) {
-                        old.parentNode.removeChild(old);
-                    }
+            if (canvas) {
+                var url = canvas.toDataURL('image/png');
+                if (_opt.elementId) {
+                    //if is attached to element (image)
+                    _orig.setAttribute('src', url);
                 } else {
-                    _orig.setAttribute('href', url);
+                    //if is attached to fav icon
+                    if (_browser.ff || _browser.opera) {
+                        //for FF we need to "recreate" element, atach to dom and remove old <link>
+                        var old = _orig;
+                        _orig = document.createElement('link');
+                        if (_browser.opera) {
+                            _orig.setAttribute('rel', 'icon');
+                        }
+                        _orig.setAttribute('rel', 'icon');
+                        _orig.setAttribute('type', 'image/png');
+                        document.getElementsByTagName('head')[0].appendChild(_orig);
+                        _orig.setAttribute('href', url);
+                        if (old.parentNode) {
+                            old.parentNode.removeChild(old);
+                        }
+                    } else {
+                        _orig.setAttribute('href', url);
+                    }
                 }
+            } else {
+                _orig.setAttribute('href', _orig.getAttribute('x-orig-src'));
+                _orig.setAttribute('src', _orig.getAttribute('x-orig-src'));
             }
         };
 
@@ -545,6 +582,14 @@
          */
         function isPageHidden() {
             return document.hidden || document.msHidden || document.webkitHidden || document.mozHidden;
+        }
+
+        /**
+         * For each method (for older browsers)
+         */
+        function forEach(array, fn) {
+            for (var i = 0; i < array.length; i++)
+                fn(array[i], i);
         }
 
         /**
@@ -809,8 +854,8 @@
             image : image,
             webcam : webcam,
             reset : icon.reset,
-            browser: {
-               supported: _browser.supported
+            browser : {
+                supported : _browser.supported
             }
         };
     });
@@ -831,5 +876,4 @@
     }
 
 })();
-
 
