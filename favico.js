@@ -58,34 +58,8 @@
         var init = function() {
             //merge initial options
             params = merge(defaultParams, params);
-
             params.position = params.position.toLowerCase();
             params.animation = (animation.types['' + params.animation]) ? params.animation : defaultParams.animation;
-
-            var isUp = params.position.indexOf('up') > -1;
-            var isLeft = params.position.indexOf('left') > -1;
-
-            //transform animation frames coordinates (default)
-            if (isUp || isLeft) {
-                for (var i = 0; i < animation.types['' + params.animation].length; i++) {
-                    var frame = animation.types['' + params.animation][i];
-                    if (isUp) {
-                        if (frame.y < .6) {
-                            frame.y = frame.y - .4;
-                        } else {
-                            frame.y = frame.y - 2 * frame.y + (1 - frame.w);
-                        }
-                    }
-                    if (isLeft) {
-                        if (frame.x < .6) {
-                            frame.x = frame.x - .4;
-                        } else {
-                            frame.x = frame.x - 2 * frame.x + (1 - frame.h);
-                        }
-                    }
-                    animation.types['' + params.animation][i] = frame;
-                }
-            }
             params.type = (type['' + params.type]) ? params.type : defaultParams.type;
 
             try {
@@ -608,9 +582,13 @@
             };
         };
 
-        animation.generator.animationPosition = function(start, end, frame, frame_length, timing){
+        animation.generator.animationPosition = function(start, end, frame, frameLength, timing){
+            animation.generator.adjustPosition(start);
+            animation.generator.adjustPosition(end);
+
             timing = ( typeof timing !== 'undefined') ? timing : 'linear';
-            var progress = animation.generator.animationTiming[timing](frame, frame_length);
+            var progress = animation.generator.animationTiming[timing](frame, frameLength);
+
             return {
                 x : start.x + (end.x - start.x) * progress,
                 y : start.y + (end.y - start.y) * progress,
@@ -621,10 +599,25 @@
         };
 
         /**
+         * Update badge position if its position is not bottom-right. (left, up)
+         */
+        animation.generator.adjustPosition = function(position) {
+            var isUp = params.position.indexOf('up') > -1;
+            var isLeft = params.position.indexOf('left') > -1;
+
+            if (isLeft) {
+                position.x = 1 - position.x - position.w;
+            }
+            if (isUp) {
+                position.y = 1 - position.y - position.h;
+            }
+        }
+
+        /**
          * Animation timing (linear)
          */
         animation.generator.animationTiming = {
-            'linear': function(frame, frame_length) { return frame_length === 1 ? 1 : frame / (frame_length - 1); }
+            'linear': function(frame, frameLength) { return frameLength === 1 ? 1 : frame / (frameLength - 1); }
         }
 
         /**
