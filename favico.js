@@ -136,6 +136,9 @@
          */
         icon.reset = function() {
             //reset
+            if (!_ready) {
+                return;
+            }
             _queue = [];
             _lastBadge = false;
             _context.clearRect(0, 0, _w, _h);
