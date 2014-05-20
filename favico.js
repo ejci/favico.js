@@ -479,7 +479,7 @@
             }
             //check if image and link url is on same domain. if not raise error
             url = (_opt.elementId) ? elm.src : elm.href;
-            if (url.indexOf(document.location.hostname) === -1) {
+            if (url && url.substr(0, 5) !== 'data:' && url.indexOf(document.location.hostname) === -1) {
                 throw new Error('Error setting favicon. Favicon image is on different domain (Icon: ' + url + ', Domain: ' + document.location.hostname + ')');
             }
             elm.setAttribute('type', 'image/png');
