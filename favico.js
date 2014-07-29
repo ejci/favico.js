@@ -58,34 +58,8 @@
         var init = function() {
             //merge initial options
             params = merge(defaultParams, params);
-
             params.position = params.position.toLowerCase();
             params.animation = (animation.types['' + params.animation]) ? params.animation : defaultParams.animation;
-
-            var isUp = params.position.indexOf('up') > -1;
-            var isLeft = params.position.indexOf('left') > -1;
-
-            //transform animation frames coordinates (default)
-            if (isUp || isLeft) {
-                for (var i = 0; i < animation.types['' + params.animation].length; i++) {
-                    var frame = animation.types['' + params.animation][i];
-                    if (isUp) {
-                        if (frame.y < .6) {
-                            frame.y = frame.y - .4;
-                        } else {
-                            frame.y = frame.y - 2 * frame.y + (1 - frame.w);
-                        }
-                    }
-                    if (isLeft) {
-                        if (frame.x < .6) {
-                            frame.x = frame.x - .4;
-                        } else {
-                            frame.x = frame.x - 2 * frame.x + (1 - frame.h);
-                        }
-                    }
-                    animation.types['' + params.animation][i] = frame;
-                }
-            }
             params.type = (type['' + params.type]) ? params.type : defaultParams.type;
 
             try {
@@ -589,219 +563,133 @@
          * Animation "frame" duration
          */
         animation.duration = 40;
+
+        /**
+         * @namespace animation.generator
+         */
+        animation.generator = {};
+
+        /**
+         * Return default
+         */
+        animation.generator.defaultEnd = function() {
+            return {
+                x : .4,
+                y : .4,
+                w : .6,
+                h : .6,
+                o : 1
+            };
+        };
+
+        animation.generator.animationPosition = function(start, end, frame, frameLength, timing){
+            animation.generator.adjustPosition(start);
+            animation.generator.adjustPosition(end);
+
+            timing = ( typeof timing !== 'undefined') ? timing : 'linear';
+            var progress = animation.generator.animationTiming[timing](frame, frameLength);
+
+            return {
+                x : start.x + (end.x - start.x) * progress,
+                y : start.y + (end.y - start.y) * progress,
+                w : start.w + (end.w - start.w) * progress,
+                h : start.h + (end.h - start.h) * progress,
+                o : start.o + (end.o - start.o) * progress
+            };
+        };
+
+        /**
+         * Update badge position if its position is not bottom-right. (left, up)
+         */
+        animation.generator.adjustPosition = function(position) {
+            var isUp = params.position.indexOf('up') > -1;
+            var isLeft = params.position.indexOf('left') > -1;
+
+            if (isLeft) {
+                position.x = 1 - position.x - position.w;
+            }
+            if (isUp) {
+                position.y = 1 - position.y - position.h;
+            }
+        }
+
+        /**
+         * Animation timing (linear)
+         */
+        animation.generator.animationTiming = {
+            'linear': function(frame, frameLength) { return frameLength === 1 ? 1 : frame / (frameLength - 1); }
+        }
+
         /**
          * Animation types (none,fade,pop,slide)
          */
         animation.types = {};
-        animation.types.fade = [{
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .0
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .1
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .2
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .3
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .4
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .5
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .6
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .7
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .8
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : .9
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : 1.0
-        }];
-        animation.types.none = [{
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : 1
-        }];
-        animation.types.pop = [{
-            x : 1,
-            y : 1,
-            w : 0,
-            h : 0,
-            o : 1
-        }, {
-            x : .9,
-            y : .9,
-            w : .1,
-            h : .1,
-            o : 1
-        }, {
-            x : .8,
-            y : .8,
-            w : .2,
-            h : .2,
-            o : 1
-        }, {
-            x : .7,
-            y : .7,
-            w : .3,
-            h : .3,
-            o : 1
-        }, {
-            x : .6,
-            y : .6,
-            w : .4,
-            h : .4,
-            o : 1
-        }, {
-            x : .5,
-            y : .5,
-            w : .5,
-            h : .5,
-            o : 1
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : 1
-        }];
-        animation.types.popFade = [{
-            x : .75,
-            y : .75,
-            w : 0,
-            h : 0,
-            o : 0
-        }, {
-            x : .65,
-            y : .65,
-            w : .1,
-            h : .1,
-            o : .2
-        }, {
-            x : .6,
-            y : .6,
-            w : .2,
-            h : .2,
-            o : .4
-        }, {
-            x : .55,
-            y : .55,
-            w : .3,
-            h : .3,
-            o : .6
-        }, {
-            x : .50,
-            y : .50,
-            w : .4,
-            h : .4,
-            o : .8
-        }, {
-            x : .45,
-            y : .45,
-            w : .5,
-            h : .5,
-            o : .9
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : 1
-        }];
-        animation.types.slide = [{
-            x : .4,
-            y : 1,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .9,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .9,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .8,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .7,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .6,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .5,
-            w : .6,
-            h : .6,
-            o : 1
-        }, {
-            x : .4,
-            y : .4,
-            w : .6,
-            h : .6,
-            o : 1
-        }];
+
+        animation.types.fade = {};
+        animation.types.fade.length = 11;
+        animation.types.fade.position = function(frame) {
+            var start = {
+                x : .4,
+                y : .4,
+                w : .6,
+                h : .6,
+                o : .0
+            };
+            return animation.generator.animationPosition(start, animation.generator.defaultEnd(), frame, animation.types.fade.length);
+        };
+
+        animation.types.none = {};
+        animation.types.none.length = 1;
+        animation.types.none.position = function(frame) {
+            var start = {
+                x : .4,
+                y : .4,
+                w : .6,
+                h : .6,
+                o : 1
+            };
+            return animation.generator.animationPosition(start, animation.generator.defaultEnd(), frame, animation.types.none.length);
+        };
+
+        animation.types.pop = {};
+        animation.types.pop.length = 7;
+        animation.types.pop.position = function(frame) {
+            var start = {
+                x : 1,
+                y : 1,
+                w : 0,
+                h : 0,
+                o : 1
+            };
+            return animation.generator.animationPosition(start, animation.generator.defaultEnd(), frame, animation.types.pop.length);
+        };
+
+        animation.types.slide = {};
+        animation.types.slide.length = 7;
+        animation.types.slide.position = function(frame) {
+            var start = {
+                x : .4,
+                y : 1,
+                w : .6,
+                h : .6,
+                o : 1
+            };
+            return animation.generator.animationPosition(start, animation.generator.defaultEnd(), frame, animation.types.slide.length);
+        };
+
+        animation.types.popFade = {};
+        animation.types.popFade.length = 6;
+        animation.types.popFade.position = function(frame) {
+            var start = {
+                x : .75,
+                y : .75,
+                w : 0,
+                h : 0,
+                o : 0
+            };
+            return animation.generator.animationPosition(start, animation.generator.defaultEnd(), frame, animation.types.popFade.length);
+        };
+
         /**
          * Run animation
          * @param {Object} opt Animation options
@@ -819,7 +707,8 @@
             cb = (cb) ? cb : function() {
             };
             if ((frame < animationType.length) && (frame >= 0)) {
-                type[params.type](merge(opt, animationType[frame]));
+                type[params.type](merge(opt, animationType.position(frame)));
+
                 animationTimer = setTimeout(function() {
                     if (revert) {
                         frame = frame - 1;
