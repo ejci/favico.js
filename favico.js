@@ -37,12 +37,13 @@
         var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
 
         _browser = {};
-        _browser.ff = (/firefox/i.test(navigator.userAgent.toLowerCase()));
-        _browser.chrome = (/chrome/i.test(navigator.userAgent.toLowerCase()));
-        _browser.opera = (/opera/i.test(navigator.userAgent.toLowerCase()));
-        _browser.ie = (/msie/i.test(navigator.userAgent.toLowerCase())) || (/trident/i.test(navigator.userAgent.toLowerCase()));
+        _browser.ff = typeof InstallTrigger != 'undefined';
+        _browser.chrome = !!window.chrome;
+        _browser.opera = !!window.opera || navigator.userAgent.indexOf('Opera') >= 0;
+        _browser.ie = /*@cc_on!@*/ false;
+        _browser.safari = Object.prototype.toString.call(window.HTMLElement).indexOf('Constructor') > 0;
         _browser.supported = (_browser.chrome || _browser.ff || _browser.opera);
-
+    
         var _queue = [];
         _readyCb = function() {
         };
@@ -813,7 +814,10 @@
             video : video,
             image : image,
             webcam : webcam,
-            reset : icon.reset
+            reset : icon.reset,
+            browser: {
+               supported: _browser.supported
+            }
         };
     });
 
@@ -833,3 +837,5 @@
     }
 
 })();
+
+
