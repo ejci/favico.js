@@ -87,36 +87,33 @@
 				}
 			}
 			_opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
-			try {
-				_orig = link.getIcon();
-				//create temp canvas
-				_canvas = document.createElement('canvas');
-				//create temp image
-				_img = document.createElement('img');
-				if (_orig.hasAttribute('href')) {
-					_img.setAttribute('src', _orig.getAttribute('href'));
-					//get width/height
-					_img.onload = function() {
-						_h = (_img.height > 0) ? _img.height : 32;
-						_w = (_img.width > 0) ? _img.width : 32;
-						_canvas.height = _h;
-						_canvas.width = _w;
-						_context = _canvas.getContext('2d');
-						icon.ready();
-					};
-				} else {
-					_img.setAttribute('src', '');
-					_h = 32;
-					_w = 32;
-					_img.height = _h;
-					_img.width = _w;
+
+			_orig = link.getIcon();
+			//create temp canvas
+			_canvas = document.createElement('canvas');
+			//create temp image
+			_img = document.createElement('img');
+			if (_orig.hasAttribute('href')) {
+				_img.setAttribute('src', _orig.getAttribute('href'));
+				//get width/height
+				_img.onload = function() {
+					_h = (_img.height > 0) ? _img.height : 32;
+					_w = (_img.width > 0) ? _img.width : 32;
 					_canvas.height = _h;
 					_canvas.width = _w;
 					_context = _canvas.getContext('2d');
 					icon.ready();
-				}
-			} catch(e) {
-				throw 'Error initializing favico. Message: ' + e.message;
+				};
+			} else {
+				_img.setAttribute('src', '');
+				_h = 32;
+				_w = 32;
+				_img.height = _h;
+				_img.width = _w;
+				_canvas.height = _h;
+				_canvas.width = _w;
+				_context = _canvas.getContext('2d');
+				icon.ready();
 			}
 
 		};
