@@ -142,6 +142,7 @@
 			}
 			_queue = [];
 			_lastBadge = false;
+			_running = false;
 			_context.clearRect(0, 0, _w, _h);
 			_context.drawImage(_img, 0, 0, _w, _h);
 			//_stop=true;
