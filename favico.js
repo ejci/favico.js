@@ -466,7 +466,9 @@
 				}
 				return false;
 			};
-			if (_opt.elementId) {
+			if (_opt.element) {
+				elm = _opt.element;
+			} else if (_opt.elementId) {
 				//if img element identified by elementId
 				elm = document.getElementById(_opt.elementId);
 				elm.setAttribute('href', elm.getAttribute('src'));
@@ -489,7 +491,9 @@
 		};
 		link.setIcon = function(canvas) {
 			var url = canvas.toDataURL('image/png');
-			if (_opt.elementId) {
+			if (_opt.element) {
+				_opt.element.setAttribute('src', url);
+			} else if (_opt.elementId) {
 				//if is attached to element (image)
 				document.getElementById(_opt.elementId).setAttribute('src', url);
 			} else {
