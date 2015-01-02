@@ -496,6 +496,9 @@
 			} else if (_opt.elementId) {
 				//if is attached to element (image)
 				document.getElementById(_opt.elementId).setAttribute('src', url);
+			} else if (_opt.setter) {
+				//if using custom exporter
+				_opt.setter(url);
 			} else {
 				//if is attached to fav icon
 				if (_browser.ff || _browser.opera) {
