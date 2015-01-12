@@ -13,6 +13,7 @@
  * var favico = new Favico({
  *    bgColor : '#d00',
  *    textColor : '#fff',
+ *    strokeColor : '#000',
  *    fontFamily : 'sans-serif',
  *    fontStyle : 'bold',
  *    position : 'down',
@@ -174,7 +175,7 @@
 				_running = true;
 				var run = function() {
 					// apply options for this animation
-					['type', 'animation', 'bgColor', 'textColor', 'fontFamily', 'fontStyle'].forEach(function(a) {
+					['type', 'animation', 'bgColor', 'textColor', 'strokeColor', 'fontFamily', 'fontStyle'].forEach(function(a) {
 						if ( a in _queue[0].options) {
 							_opt[a] = _queue[0].options[a];
 						}
@@ -240,8 +241,8 @@
 				y = Math.floor(opt.y + opt.h - opt.h * 0.15);
 			}
 
-			if(opt.strokeColor) {
-				_context.strokeStyle = 'black';
+			if(_opt.strokeColor) {
+				_context.strokeStyle = 'rgba(' + _opt.strokeColor.r + ',' + _opt.strokeColor.g + ',' + _opt.strokeColor.b + ',' + opt.o + ')';
 				_context.miterLimit = 2;
 				_context.lineJoin = 'circle';
 
