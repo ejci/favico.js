@@ -205,28 +205,45 @@
 			opt.len = ("" + opt.n).length;
 			return opt;
 		};
+
+		// Draw badge on context, supply a function to draw the background (described by the type options)
+		// See type.* for predefined functions.
+		var drawBadge = function(opt, typeFunction) {
+			opt = options(opt);
+			if (opt.len === 2) {
+				opt.x = opt.x - opt.w * 0.4;
+				opt.w = opt.w * 1.4;
+			} else if (opt.len >= 3) {
+				opt.x = opt.x - opt.w * 0.65;
+				opt.w = opt.w * 1.65;
+			}
+			_context.clearRect(0, 0, _w, _h);
+			_context.drawImage(_img, 0, 0, _w, _h);
+			_context.beginPath();
+			_context.textAlign = 'center';
+			_context.fillStyle = 'rgba(' + _opt.bgColor.r + ',' + _opt.bgColor.g + ',' + _opt.bgColor.b + ',' + opt.o + ')';
+
+			typeFunction(opt);
+
+			_context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
+			//_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+			if (( typeof opt.n) === 'number' && opt.n > 999) {
+				_context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
+			} else {
+				_context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+			}
+			_context.closePath();
+		};
+
+		type.none = function(opt) {};
+
 		/**
 		 * Generate circle
 		 * @param {Object} opt Badge options
 		 */
 		type.circle = function(opt) {
-			opt = options(opt);
-			var more = false;
-			if (opt.len === 2) {
-				opt.x = opt.x - opt.w * 0.4;
-				opt.w = opt.w * 1.4;
-				more = true;
-			} else if (opt.len >= 3) {
-				opt.x = opt.x - opt.w * 0.65;
-				opt.w = opt.w * 1.65;
-				more = true;
-			}
-			_context.clearRect(0, 0, _w, _h);
-			_context.drawImage(_img, 0, 0, _w, _h);
-			_context.beginPath();
 			_context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.85 : 1)) + "px " + _opt.fontFamily;
-			_context.textAlign = 'center';
-			if (more) {
+			if (opt.length > 1) {
 				_context.moveTo(opt.x + opt.w / 2, opt.y);
 				_context.lineTo(opt.x + opt.w - opt.h / 2, opt.y);
 				_context.quadraticCurveTo(opt.x + opt.w, opt.y, opt.x + opt.w, opt.y + opt.h / 2);
@@ -244,46 +261,15 @@
 			_context.closePath();
 			_context.beginPath();
 			_context.stroke();
-			_context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
-			//_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-			if (( typeof opt.n) === 'number' && opt.n > 999) {
-				_context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
-			} else {
-				_context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-			}
-			_context.closePath();
 		};
 		/**
 		 * Generate rectangle
 		 * @param {Object} opt Badge options
 		 */
 		type.rectangle = function(opt) {
-			opt = options(opt);
-			var more = false;
-			if (opt.len === 2) {
-				opt.x = opt.x - opt.w * 0.4;
-				opt.w = opt.w * 1.4;
-				more = true;
-			} else if (opt.len >= 3) {
-				opt.x = opt.x - opt.w * 0.65;
-				opt.w = opt.w * 1.65;
-				more = true;
-			}
-			_context.clearRect(0, 0, _w, _h);
-			_context.drawImage(_img, 0, 0, _w, _h);
-			_context.beginPath();
 			_context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.9 : 1)) + "px " + _opt.fontFamily;
-			_context.textAlign = 'center';
 			_context.fillStyle = 'rgba(' + _opt.bgColor.r + ',' + _opt.bgColor.g + ',' + _opt.bgColor.b + ',' + opt.o + ')';
 			_context.fillRect(opt.x, opt.y, opt.w, opt.h);
-			_context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
-			//_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-			if (( typeof opt.n) === 'number' && opt.n > 999) {
-				_context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
-			} else {
-				_context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
-			}
-			_context.closePath();
 		};
 
 		/**
@@ -796,7 +782,7 @@
 			cb = (cb) ? cb : function() {
 			};
 			if ((step < animationType.length) && (step >= 0)) {
-				type[_opt.type](merge(opt, animationType[step]));
+				drawBadge(merge(opt, animationType[step]), type[_opt.type]);
 				_animTimeout = setTimeout(function() {
 					if (revert) {
 						step = step - 1;
@@ -842,4 +828,3 @@
 	}
 
 })();
-
