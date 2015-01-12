@@ -56,6 +56,7 @@
 			_opt = merge(_def, opt);
 			_opt.bgColor = hexToRgb(_opt.bgColor);
 			_opt.textColor = hexToRgb(_opt.textColor);
+			_opt.strokeColor = hexToRgb(_opt.strokeColor);
 			_opt.position = _opt.position.toLowerCase();
 			_opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
 
@@ -225,17 +226,37 @@
 
 			typeFunction(opt);
 
+
 			_context.fillStyle = 'rgba(' + _opt.textColor.r + ',' + _opt.textColor.g + ',' + _opt.textColor.b + ',' + opt.o + ')';
 			//_context.fillText((more) ? '9+' : opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+			var text, x, y;
 			if (( typeof opt.n) === 'number' && opt.n > 999) {
-				_context.fillText(((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+', Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.2));
+				text = ((opt.n > 9999) ? 9 : Math.floor(opt.n / 1000) ) + 'k+';
+				x = Math.floor(opt.x + opt.w / 2);
+				y = Math.floor(opt.y + opt.h - opt.h * 0.2);
 			} else {
-				_context.fillText(opt.n, Math.floor(opt.x + opt.w / 2), Math.floor(opt.y + opt.h - opt.h * 0.15));
+				text = opt.n;
+				x = Math.floor(opt.x + opt.w / 2);
+				y = Math.floor(opt.y + opt.h - opt.h * 0.15);
 			}
+
+			if(opt.strokeColor) {
+				_context.strokeStyle = 'black';
+				_context.miterLimit = 2;
+				_context.lineJoin = 'circle';
+
+				_context.lineWidth = 3;
+				_context.strokeText(text, x, y);
+				_context.lineWidth = 1;
+			}
+
+			_context.fillText(text, x, y);
 			_context.closePath();
 		};
 
-		type.none = function(opt) {};
+		type.none = function(opt) {
+			_context.font = _opt.fontStyle + " " + Math.floor(opt.h * (opt.n > 99 ? 0.9 : 1)) + "px " + _opt.fontFamily;
+		};
 
 		/**
 		 * Generate circle
@@ -294,7 +315,7 @@
 						if ('type' in opts && type['' + opts.type]) {
 							q.options.type = '' + opts.type;
 						}
-						['bgColor', 'textColor'].forEach(function(o) {
+						['bgColor', 'textColor', 'strokeColor'].forEach(function(o) {
 							if ( o in opts) {
 								q.options[o] = hexToRgb(opts[o]);
 							}
@@ -510,7 +531,7 @@
 		//HEX to RGB convertor
 		function hexToRgb(hex) {
 			var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
-			hex = hex.replace(shorthandRegex, function(m, r, g, b) {
+			hex = hex && hex.replace(shorthandRegex, function(m, r, g, b) {
 				return r + r + g + g + b + b;
 			});
 			var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
