@@ -459,12 +459,19 @@
 			//get link element
 			var getLink = function() {
 				var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
+				var result = false;
 				for (var l = link.length, i = (l - 1); i >= 0; i--) {
 					if ((/(^|\s)icon(\s|$)/i).test(link[i].getAttribute('rel'))) {
-						return link[i];
+						if(!result) {
+							result = link[i];
+						} else {
+							if(_browser.chrome) {
+								link[i].parentNode.removeChild(link[i]);
+							}
+						}
 					}
 				}
-				return false;
+				return result;
 			};
 			if (_opt.element) {
 				elm = _opt.element;
@@ -842,4 +849,3 @@
 	}
 
 })();
-
