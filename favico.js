@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.5
+ * @version 0.3.6
  */
 
 /**
@@ -22,7 +22,8 @@
  */
 (function() {
 
-	var Favico = (function(opt) {'use strict';
+	var Favico = (function(opt) {
+		'use strict';
 		opt = (opt) ? opt : {};
 		var _def = {
 			bgColor : '#d00',

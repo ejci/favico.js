@@ -3,7 +3,7 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.3.4
+Version 0.3.6
 
 Contributors:
 [Serge Barysiuk](https://github.com/sbarysiuk),
@@ -19,6 +19,9 @@ Contributors:
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ###Change log
+####0.3.6
+* bigfixes
+
 ####0.3.4
 * new option for position
 
