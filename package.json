@@ -17,5 +17,12 @@
 		"uglify-js": "~2.4.0",
 		"jshint": "~2.1.11",
 		"semver": "~2.1.0"
+	},
+	"spm": {
+		"main": "favico.js",
+		"ignore": [
+			"resources",
+			"page"
+		]
 	}
 }
