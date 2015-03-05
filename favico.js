@@ -489,7 +489,10 @@
 		};
 		link.setIcon = function(canvas) {
 			var url = canvas.toDataURL('image/png');
-			if (_opt.element) {
+			if (_opt.setter) {
+				//if using custom exporter
+				_opt.setter(url);
+			} else if (_opt.element) {
 				_opt.element.setAttribute('src', url);
 			} else if (_opt.elementId) {
 				//if is attached to element (image)
