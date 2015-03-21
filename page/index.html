@@ -12,13 +12,13 @@
 		<meta property="og:title" content="favico.js"/>
 		<meta property="og:type" content="website"/>
 		<meta property="og:url" content="http://lab.ejci.net/favico.js/"/>
-		<meta property="og:description" content="Make a use of your favicon with badges, images or videos"/>
+		<meta property="og:description" content="Make use of your favicon with badges, images or videos"/>
 		<meta property="og:image" content="http://lab.ejci.net/favico.js/og-image-app.png"/>
 		<meta property="og:image:type" content="image/png"/>
 		<meta property="og:image:width" content="160"/>
 		<meta property="og:image:height" content="98"/>
 		<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet"/>
-		<link href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css" rel="stylesheet"/>
+		<link href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet"/>
 
 		<!--[if lt IE 9]>
 		<script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.2/html5shiv.js"></script>
@@ -77,33 +77,33 @@
 				<div class="item active">
 					<div class="container">
 						<div class="carousel-caption">
-							<h1>favico.js <small>v0.3.6</small></h1>
+							<h1>favico.js <small>v0.3.7</small></h1>
 							<p><img id="badgeMirror" width="140" height="140" src="favicon140.ico"/>
 								<h4>Make use of your favicon with badges, images or videos </h4>
 							</p>
 							<p>
-								<a class="btn btn-lg btn-success buttonBig" href="https://github.com/ejci/favico.js"><i class="icon-github"></i> View on GitHub</a>
+								<a class="btn btn-lg btn-success buttonBig" href="https://github.com/ejci/favico.js"><i class="fa fa-github"></i> View on GitHub</a>
 							</p>
 							<p>
 								<small>Try it:</small>
 								<br />
 								<button favicon-action="favicon|plus1|faviconMirror|plus1" class="btn btn-sm btn-primary favBadge">
-									&nbsp;&nbsp;&nbsp;<i class="icon-circle-arrow-up"></i> +1&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-up"></i> +1&nbsp;&nbsp;&nbsp;
 								</button>
 								<button favicon-action="favicon|minus1|faviconMirror|minus1" class="btn btn-sm btn-primary favBadge">
-									&nbsp;&nbsp;&nbsp;<i class="icon-circle-arrow-down"></i> -1&nbsp;&nbsp;&nbsp;
+									&nbsp;&nbsp;&nbsp;<i class="fa fa-arrow-circle-down"></i> -1&nbsp;&nbsp;&nbsp;
 								</button>
 								<button favicon-action="badgeImageIco" class="btn btn-sm btn-primary favImage">
-									<i class="icon-picture"></i> Set icon
+									<i class="fa fa-picture-o"></i> Set icon
 								</button>
 								<button favicon-action="badgeVideoIco" class="btn btn-sm btn-primary favVideo">
-									<i class="icon-film"></i> Play video
+									<i class="fa fa-film"></i> Play video
 								</button>
 								<button favicon-action="badgeVideoIco" class="btn btn-sm btn-primary favWebcam">
-									<i class="icon-facetime-video"></i> Start webcam
+									<i class="fa fa-camera"></i> Start webcam
 								</button>
 								<button favicon-action="favicon|reset|faviconMirror|reset" class="btn btn-sm btn-primary favBadge">
-									<i class="icon-off"></i> Reset
+									<i class="fa fa-power-off"></i> Reset
 								</button>
 							</p>
 							<h6>Works on Chrome, Firefox, Opera and IE11+</h6>
@@ -269,25 +269,25 @@ favicon.badge(1);</pre>
 					</p>
 				</div><!-- /.col-lg-4 -->
 				<div class="col-lg-4">
-					<h3>Attach to regular image</h3>
-					<span class="browser"> <img id="badgeImage" width="16" height="16" src="favicon32.ico"/> </span>
+					<h3>Custom font support</h3>
+					<span class="browser"> <img id="badgeFont" width="16" height="16" src="favicon32.ico"/> </span>
 					<p>
-						<button favicon-action="faviconImage|plus1" class="btn btn-sm btn-default favBadge">
-							&nbsp;&nbsp;&nbsp;+1&nbsp;&nbsp;&nbsp;
+						<button favicon-action="faviconFont|volumeMute" class="btn btn-sm btn-default favBadge">
+							&nbsp;&nbsp;&nbsp;<i class="fa fa-volume-off"></i>&nbsp;&nbsp;&nbsp;
+						</button>						
+						<button favicon-action="faviconFont|volumeDown" class="btn btn-sm btn-default favBadge">
+							&nbsp;&nbsp;&nbsp;<i class="fa fa-volume-down"></i>&nbsp;&nbsp;&nbsp;
 						</button>
-						<button favicon-action="faviconImage|minus1" class="btn btn-sm btn-default favBadge">
-							&nbsp;&nbsp;&nbsp;-1&nbsp;&nbsp;&nbsp;
-						</button>
-						<button favicon-action="faviconImage|reset" class="btn btn-sm btn-default favBadge">
-							Reset
+						<button favicon-action="faviconFont|volumeUp" class="btn btn-sm btn-default favBadge">
+							&nbsp;&nbsp;&nbsp;<i class="fa fa-volume-up"></i>&nbsp;&nbsp;&nbsp;
 						</button>
 					</p>
 					<p class="text-left">
 						<pre class="text-left">var favicon=new Favico({
-    type : 'rectangle',
-    elementId : 'badgeImage'
+    fontFamily : 'FontAwesome',
+    elementId : 'badgeFont'
 });
-favicon.badge(2);</pre>
+favicon.badge('\f0a2');</pre>
 					</p>
 				</div><!-- /.col-lg-4 -->
 				<div class="col-lg-4">
@@ -441,6 +441,11 @@ favicon.webcam('stop');
 								<td>false</td>
 								<td>DOM element where to change "href" attribute (useful in case of multiple link icon elements)</td>
 							</tr>
+							<tr>
+								<td>dataUrl</td>
+								<td>false</td>
+								<td>Method that will be called for each animation from with data URI parameter</td>
+							</tr>
 						</tbody>
 					</table>
 				</div>
@@ -489,7 +494,7 @@ favicon.webcam('stop');
 		<script src="//code.jquery.com/jquery-1.10.1.min.js"></script>
 		<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
 
-		<script src="favico-0.3.6.min.js"></script>
+		<script src="favico.min.js"></script>
 		<!--script src="../favico.js"></script-->
 		<script src="example.js"></script>
 		<script>

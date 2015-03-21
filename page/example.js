@@ -35,9 +35,10 @@ $(document).ready(function() {
 		animation : 'slide',
 		elementId : 'badgeShape'
 	});
-	window.faviconImage = new Favico({
-		type : 'rectangle',
-		elementId : 'badgeImage'
+	window.faviconFont = new Favico({
+		fontFamily : 'FontAwesome',
+		bgColor : '#f00',
+		elementId : 'badgeFont'
 	});
 	window.faviconColor = new Favico({
 		bgColor : '#5CB85C',
@@ -69,9 +70,22 @@ $(document).ready(function() {
 		return window[val];
 	};
 
+	window.volumeUp = function(val) {
+		window[val] = '\uf028';
+		return window[val];
+	};
+	window.volumeDown = function(val) {
+		window[val] = '\uf027';
+		return window[val];
+	};
+	window.volumeMute = function(val) {
+		window[val] = '\uf026';
+		return window[val];
+	};
+
 	$('.favBadge').bind('click', function(e) {
 		//badges
-		var favBadge = $(e.target).attr('favicon-action').split('|');
+		var favBadge = $(this).attr('favicon-action').split('|');
 		for (var i = 0; i < favBadge.length; i = i + 2) {
 			var value = window[''+favBadge[i+1]]('val_' + favBadge[i]);
 			window['' + favBadge[i]].badge(value);
@@ -79,23 +93,23 @@ $(document).ready(function() {
 	});
 	$('.favImage').bind('click', function(e) {
 		//images
-		var favBadge = $(e.target).attr('favicon-action');
+		var favBadge = $(this).attr('favicon-action');
 		var image = document.getElementById(favBadge);
 		window.favicon.image(image);
 	});
 	$('.favVideo').bind('click', function(e) {
 		//images
-		var favBadge = $(e.target).attr('favicon-action');
+		var favBadge = $(this).attr('favicon-action');
 		var video = document.getElementById(favBadge);
 		video.volume = 0.2;
 		if (!video.paused && !video.ended) {
 			video.pause();
 			video.currentTime = 0;
-			$(e.target).html('Play video');
+			$(this).html('Play video');
 			window.favicon.video('stop');
 		} else {
 			window.favicon.video(video);
-			$(e.target).html('Stop video');
+			$(this).html('Stop video');
 			video.play();
 		}
 	});
@@ -107,11 +121,11 @@ $(document).ready(function() {
 			if (isWebcam) {
 				window.favicon.webcam('stop');
 				//only way to stop webcam :(
-				$(e.target).html('Start webcam');
+				$(this).html('Start webcam');
 				location.reload();
 			} else {
 				window.favicon.webcam();
-				$(e.target).html('Stop webcam');
+				$(this).html('Stop webcam');
 			}
 			isWebcam = !isWebcam;
 		} else {
@@ -148,8 +162,8 @@ $(document).ready(function() {
 		window.faviconPosition.badge(window.val_faviconPosition);
 		window.val_faviconShape = 1;
 		window.faviconShape.badge(window.val_faviconShape);
-		window.val_faviconImage = 2;
-		window.faviconImage.badge(window.val_faviconImage);
+		window.val_faviconFont = '\uf026';
+		window.faviconFont.badge(window.val_faviconFont);
 		window.val_faviconColor = 3;
 		window.faviconColor.badge(window.val_faviconColor);
 	}, 1500);
