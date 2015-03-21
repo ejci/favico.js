@@ -455,7 +455,6 @@
 		 */
 		link.getIcon = function() {
 			var elm = false;
-			var url = '';
 			//get link element
 			var getLink = function() {
 				var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
