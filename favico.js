@@ -18,6 +18,7 @@
  *    position : 'down',
  *    type : 'circle',
  *    animation : 'slide',
+ *    dataUrl: function(url){}
  * });
  */
 (function() {
@@ -33,7 +34,8 @@
 			type : 'circle',
 			position : 'down', // down, up, left, leftup (upleft)
 			animation : 'slide',
-			elementId : false
+			elementId : false,
+			dataUrl : false
 		};
 		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
 
@@ -489,10 +491,11 @@
 		};
 		link.setIcon = function(canvas) {
 			var url = canvas.toDataURL('image/png');
-			if (_opt.setter) {
+			if (_opt.dataUrl) {
 				//if using custom exporter
-				_opt.setter(url);
-			} else if (_opt.element) {
+				_opt.dataUrl(url);
+			}
+			if (_opt.element) {
 				_opt.element.setAttribute('src', url);
 			} else if (_opt.elementId) {
 				//if is attached to element (image)
