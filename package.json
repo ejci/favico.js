@@ -1,6 +1,6 @@
 {
 	"name": "favico.js",
-	"version": "0.3.6",
+	"version": "0.3.7",
 	"description": "Favico.js is a library to manipulate the favicon, adding alert badges, render images or videos.",
 	"main": "favico.js",
 	"repository": {
@@ -20,9 +20,6 @@
 	},
 	"spm": {
 		"main": "favico.js",
-		"ignore": [
-			"resources",
-			"page"
-		]
+		"ignore": ["resources", "page"]
 	}
 }
