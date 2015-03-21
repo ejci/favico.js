@@ -2,7 +2,7 @@
  * @license MIT
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
- * @version 0.3.6
+ * @version 0.3.7
  */
 
 /**
