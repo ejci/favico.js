@@ -7,6 +7,9 @@
 		"type": "git",
 		"url": "git://github.com/ejci/favico.js.git"
 	},
+	"publishConfig": {
+		"registry": "http://registry.npmjs.org/"
+	},
 	"keywords": ["favicon", "badge"],
 	"author": "Miroslav Magda <magda.miroslav@gmail.com>",
 	"license": "MIT",
