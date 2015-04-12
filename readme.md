@@ -3,7 +3,7 @@ More info [here](http://lab.ejci.net/favico.js/).
 
 
 Author [Miroslav Magda](http://blog.ejci.net)
-Version 0.3.6
+Version 0.3.8
 
 Contributors:
 [Serge Barysiuk](https://github.com/sbarysiuk),
