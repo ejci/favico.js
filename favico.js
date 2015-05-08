@@ -97,6 +97,7 @@
 			//create temp image
 			_img = document.createElement('img');
 			if (_orig.hasAttribute('href')) {
+				_img.setAttribute('crossOrigin', 'anonymous');
 				_img.setAttribute('src', _orig.getAttribute('href'));
 				//get width/height
 				_img.onload = function() {
@@ -345,6 +346,7 @@
 					var h = imageElement.height;
 					var newImg = document.createElement('img');
 					var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
+					newImg.setAttribute('crossOrigin', 'anonymous');
 					newImg.setAttribute('src', imageElement.getAttribute('src'));
 					newImg.height = (h / ratio);
 					newImg.width = (w / ratio);
