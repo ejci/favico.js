@@ -18,7 +18,8 @@
  *    position : 'down',
  *    type : 'circle',
  *    animation : 'slide',
- *    dataUrl: function(url){}
+ *    dataUrl: function(url){},
+ *    win: top
  * });
  */
 (function() {
@@ -35,9 +36,10 @@
 			position : 'down', // down, up, left, leftup (upleft)
 			animation : 'slide',
 			elementId : false,
-			dataUrl : false
+			dataUrl : false,
+			win: window
 		};
-		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout;
+		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
 
 		_browser = {};
 		_browser.ff = typeof InstallTrigger != 'undefined';
@@ -61,6 +63,8 @@
 			_opt.textColor = hexToRgb(_opt.textColor);
 			_opt.position = _opt.position.toLowerCase();
 			_opt.animation = (animation.types['' + _opt.animation]) ? _opt.animation : _def.animation;
+
+			_doc = _opt.win.document;
 
 			var isUp = _opt.position.indexOf('up') > -1;
 			var isLeft = _opt.position.indexOf('left') > -1;
@@ -459,7 +463,7 @@
 			var elm = false;
 			//get link element
 			var getLink = function() {
-				var link = document.getElementsByTagName('head')[0].getElementsByTagName('link');
+				var link = _doc.getElementsByTagName('head')[0].getElementsByTagName('link');
 				for (var l = link.length, i = (l - 1); i >= 0; i--) {
 					if ((/(^|\s)icon(\s|$)/i).test(link[i].getAttribute('rel'))) {
 						return link[i];
@@ -471,15 +475,15 @@
 				elm = _opt.element;
 			} else if (_opt.elementId) {
 				//if img element identified by elementId
-				elm = document.getElementById(_opt.elementId);
+				elm = _doc.getElementById(_opt.elementId);
 				elm.setAttribute('href', elm.getAttribute('src'));
 			} else {
 				//if link element
 				elm = getLink();
 				if (elm === false) {
-					elm = document.createElement('link');
+					elm = _doc.createElement('link');
 					elm.setAttribute('rel', 'icon');
-					document.getElementsByTagName('head')[0].appendChild(elm);
+					_doc.getElementsByTagName('head')[0].appendChild(elm);
 				}
 			}
 			elm.setAttribute('type', 'image/png');
@@ -495,21 +499,21 @@
 				_opt.element.setAttribute('src', url);
 			} else if (_opt.elementId) {
 				//if is attached to element (image)
-				document.getElementById(_opt.elementId).setAttribute('src', url);
+				_doc.getElementById(_opt.elementId).setAttribute('src', url);
 			} else {
 				//if is attached to fav icon
 				if (_browser.ff || _browser.opera) {
 					//for FF we need to "recreate" element, atach to dom and remove old <link>
 					//var originalType = _orig.getAttribute('rel');
 					var old = _orig;
-					_orig = document.createElement('link');
+					_orig = _doc.createElement('link');
 					//_orig.setAttribute('rel', originalType);
 					if (_browser.opera) {
 						_orig.setAttribute('rel', 'icon');
 					}
 					_orig.setAttribute('rel', 'icon');
 					_orig.setAttribute('type', 'image/png');
-					document.getElementsByTagName('head')[0].appendChild(_orig);
+					_doc.getElementsByTagName('head')[0].appendChild(_orig);
 					_orig.setAttribute('href', url);
 					if (old.parentNode) {
 						old.parentNode.removeChild(old);
@@ -555,7 +559,7 @@
 		 * http://stackoverflow.com/questions/12536562/detect-whether-a-window-is-visible
 		 */
 		function isPageHidden() {
-			return document.hidden || document.msHidden || document.webkitHidden || document.mozHidden;
+			return _doc.hidden || _doc.msHidden || _doc.webkitHidden || _doc.mozHidden;
 		}
 
 		/**
