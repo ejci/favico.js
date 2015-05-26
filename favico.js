@@ -325,14 +325,14 @@
 						});
 						_queue.push(q);
 						if (_queue.length > 100) {
-							throw 'Too many badges requests in queue.';
+							throw new Error('Too many badges requests in queue.');
 						}
 						icon.start();
 					} else {
 						icon.reset();
 					}
 				} catch(e) {
-					throw 'Error setting badge. Message: ' + e.message;
+					throw new Error('Error setting badge. Message: ' + e.message);
 				}
 			};
 			if (_ready) {
@@ -358,7 +358,7 @@
 					_context.drawImage(newImg, 0, 0, _w, _h);
 					link.setIcon(_canvas);
 				} catch(e) {
-					throw 'Error setting image. Message: ' + e.message;
+					throw new Error('Error setting image. Message: ' + e.message);
 				}
 			};
 			if (_ready) {
@@ -385,7 +385,7 @@
 					}, false);
 
 				} catch(e) {
-					throw 'Error setting video. Message: ' + e.message;
+					throw new Error('Error setting video. Message: ' + e.message);
 				}
 			};
 			if (_ready) {
@@ -427,7 +427,7 @@
 						}, function() {
 						});
 					} catch(e) {
-						throw 'Error setting webcam. Message: ' + e.message;
+						throw new Error('Error setting webcam. Message: ' + e.message);
 					}
 				};
 				if (_ready) {
@@ -846,4 +846,3 @@
 	}
 
 })();
-
