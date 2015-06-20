@@ -496,10 +496,13 @@
 				_opt.dataUrl(url);
 			}
 			if (_opt.element) {
+				_opt.element.setAttribute('href', url);
 				_opt.element.setAttribute('src', url);
 			} else if (_opt.elementId) {
 				//if is attached to element (image)
-				_doc.getElementById(_opt.elementId).setAttribute('src', url);
+				var elm = _doc.getElementById(_opt.elementId);
+				elm.setAttribute('href', url);
+				elm.setAttribute('src', url);
 			} else {
 				//if is attached to fav icon
 				if (_browser.ff || _browser.opera) {
