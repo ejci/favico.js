@@ -356,9 +356,11 @@
 					newImg.setAttribute('src', imageElement.getAttribute('src'));
 					newImg.height = (h / ratio);
 					newImg.width = (w / ratio);
-					_context.clearRect(0, 0, _w, _h);
-					_context.drawImage(newImg, 0, 0, _w, _h);
-					link.setIcon(_canvas);
+					newImg.onload=function(){
+						_context.clearRect(0, 0, _w, _h);
+						_context.drawImage(newImg, 0, 0, _w, _h);
+						link.setIcon(_canvas);
+					}
 				} catch (e) {
 					throw new Error('Error setting image. Message: ' + e.message);
 				}
