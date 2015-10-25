@@ -102,7 +102,6 @@
 			_img = document.createElement('img');
 			if (_orig.hasAttribute('href')) {
 				_img.setAttribute('crossOrigin', 'anonymous');
-				_img.setAttribute('src', _orig.getAttribute('href'));
 				//get width/height
 				_img.onload = function () {
 					_h = (_img.height > 0) ? _img.height : 32;
@@ -112,8 +111,8 @@
 					_context = _canvas.getContext('2d');
 					icon.ready();
 				};
+				_img.setAttribute('src', _orig.getAttribute('href'));
 			} else {
-				_img.setAttribute('src', '');
 				_img.onload = function () {
 					_h = 32;
 					_w = 32;
@@ -124,6 +123,7 @@
 					_context = _canvas.getContext('2d');
 					icon.ready();
 				}
+				_img.setAttribute('src', '');
 			}
 
 		};
@@ -353,14 +353,14 @@
 					var newImg = document.createElement('img');
 					var ratio = (w / _w < h / _h) ? (w / _w) : (h / _h);
 					newImg.setAttribute('crossOrigin', 'anonymous');
-					newImg.setAttribute('src', imageElement.getAttribute('src'));
-					newImg.height = (h / ratio);
-					newImg.width = (w / ratio);
 					newImg.onload=function(){
 						_context.clearRect(0, 0, _w, _h);
 						_context.drawImage(newImg, 0, 0, _w, _h);
 						link.setIcon(_canvas);
 					}
+					newImg.setAttribute('src', imageElement.getAttribute('src'));
+					newImg.height = (h / ratio);
+					newImg.width = (w / ratio);
 				} catch (e) {
 					throw new Error('Error setting image. Message: ' + e.message);
 				}
