@@ -22,6 +22,9 @@ Contributors:
 All code is open source and dual licensed under GPL and MIT. Check the individual licenses for more information.
 
 ### Change log
+#### 0.3.10
+* bugfixes
+
 #### 0.3.9
 * bugfixes
 
