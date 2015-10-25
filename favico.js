@@ -451,7 +451,9 @@
 			} catch(e) {
 
 			}
-			_drawTimeout = setTimeout(drawVideo, animation.duration, video);
+			_drawTimeout = setTimeout(function() {
+				drawVideo(video);
+			}, animation.duration);
 			link.setIcon(_canvas);
 		}
 
