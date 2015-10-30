@@ -69,28 +69,30 @@
 			var isUp = _opt.position.indexOf('up') > -1;
 			var isLeft = _opt.position.indexOf('left') > -1;
 
-			//transform animation
+			//transform the animations
 			if (isUp || isLeft) {
-				for (var i = 0; i < animation.types['' + _opt.animation].length; i++) {
-					var step = animation.types['' + _opt.animation][i];
+				for (var a in animation.types) {
+					for (var i = 0; i < animation.types[a].length; i++) {
+						var step = animation.types[a][i];
 
-					if (isUp) {
-						if (step.y < 0.6) {
-							step.y = step.y - 0.4;
-						} else {
-							step.y = step.y - 2 * step.y + (1 - step.w);
+						if (isUp) {
+							if (step.y < 0.6) {
+								step.y = step.y - 0.4;
+							} else {
+								step.y = step.y - 2 * step.y + (1 - step.w);
+							}
 						}
-					}
 
-					if (isLeft) {
-						if (step.x < 0.6) {
-							step.x = step.x - 0.4;
-						} else {
-							step.x = step.x - 2 * step.x + (1 - step.h);
+						if (isLeft) {
+							if (step.x < 0.6) {
+								step.x = step.x - 0.4;
+							} else {
+								step.x = step.x - 2 * step.x + (1 - step.h);
+							}
 						}
-					}
 
-					animation.types['' + _opt.animation][i] = step;
+						animation.types[a][i] = step;
+					}
 				}
 			}
 			_opt.type = (type['' + _opt.type]) ? _opt.type : _def.type;
