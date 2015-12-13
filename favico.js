@@ -471,34 +471,33 @@
 			var elm = false;
 			//get link element
 			var getLink = function(){
-            	var link = _doc.getElementsByTagName('head')[0].getElementsByTagName('link');
+				var link = _doc.getElementsByTagName('head')[0].getElementsByTagName('link');
 				//Workaround: Check if it's Chrome and get the favicon url if the user has provided one
 				var overrideURL = ( _browser.chrome && _opt.hasOwnProperty("chromeURLOverride") && 
-				                	typeof _opt.chromeURLOverride === 'string' &&
-				                 	_opt.chromeURLOverride.length > 0) ?
-			                          			_opt.chromeURLOverride : "";
+									typeof _opt.chromeURLOverride === 'string' &&
+									_opt.chromeURLOverride.length > 0) ? _opt.chromeURLOverride : "";
 				var linkToUse = null;
-            
+
 				for (var l = link.length, i = (l - 1); i >= 0; i--) {
 					
 					if ((/(^|\s)icon(\s|$)/i).test(link[i].getAttribute('rel'))) {
-                        //Is it Chrome and do we have a user provided url?
+						//Is it Chrome and do we have a user provided url?
 						if(overrideURL.length > 0){
 							//Delete the icon link if it's not the one specified by user
-                            if(link[i].href !== overrideURL){
-                      				link[i].parentNode.removeChild(link[i]);
-					  		}
-					  		else{
-					  				linkToUse = link[i];
-					  		}
+							if(link[i].href !== overrideURL){
+								link[i].parentNode.removeChild(link[i]);
+							}
+							else{
+								linkToUse = link[i];
+							}
 						}
 						else{
-								return link[i];
-					    }
+							return link[i];
+						}
 					}
-            	}
-				
-			    return (typeof linkToUse === 'object') ? linkToUse : false;
+				}
+
+				return (typeof linkToUse === 'object') ? linkToUse : false;
 			};
 
 			if (_opt.element) {
