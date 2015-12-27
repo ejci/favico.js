@@ -15,7 +15,7 @@
     "badge"
   ],
   "author": "Miroslav Magda <magda.miroslav@gmail.com>",
-  "license": "MIT",
+  "license": "MIT or GPL-2.0",
   "bugs": {
     "url": "https://github.com/ejci/favico.js/issues"
   },

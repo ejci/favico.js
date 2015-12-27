@@ -1,5 +1,5 @@
 /**
- * @license MIT
+ * @license MIT or GPL-2.0
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
  * @version 0.3.10
