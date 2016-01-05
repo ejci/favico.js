@@ -443,6 +443,26 @@
 
 		};
 
+		var setOpt = function (key, value) {
+			var opts = key;
+			if (!(value == null && Object.prototype.toString.call(key) == '[object Object]')) {
+				opts = {};
+				opts[key] = value;
+			}
+
+			var keys = Object.keys(opts);
+			for (var i = 0; i < keys.length; i++) {
+				if (keys[i] == 'bgColor' || keys[i] == 'textColor') {
+					_opt[keys[i]] = hexToRgb(opts[keys[i]]);
+				} else {
+					_opt[keys[i]] = opts[keys[i]];
+				}
+			}
+
+			_queue.push(_lastBadge);
+			icon.start();
+		};
+
 		/**
 		 * Draw video to context and repeat :)
 		 */
@@ -834,6 +854,7 @@
 			video: video,
 			image: image,
 			webcam: webcam,
+			setOpt: setOpt,
 			reset: icon.reset,
 			browser: {
 				supported: _browser.supported
