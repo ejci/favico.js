@@ -76,8 +76,8 @@ All code is open source and dual licensed under GPL and MIT. Check the individua
 
 ## Browser support
 * Chrome: Yes
-* Firefox: ?
-* Safari: No
-* Opera: ?
-* IE: ?
-* Safari
+* Firefox: Yes
+* Opera: Yes
+* IE: No
+* Edge: No
+* Safari: No (Safari hides favicons)
