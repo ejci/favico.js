@@ -2,6 +2,7 @@
  * @license MIT or GPL-2.0
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
+ * @source: https://github.com/ejci/favico.js
  * @version 0.3.10
  */
 
@@ -15,11 +16,14 @@
  *    textColor : '#fff',
  *    fontFamily : 'sans-serif',
  *    fontStyle : 'bold',
- *    position : 'down',
  *    type : 'circle',
+ *    position : 'down',
  *    animation : 'slide',
+ *    elementId: false,
+ *    element: null,
  *    dataUrl: function(url){},
- *    win: top
+ *    win: window,
+ *    hideOrig: false
  * });
  */
 (function () {
@@ -36,8 +40,10 @@
 			position: 'down', // down, up, left, leftup (upleft)
 			animation: 'slide',
 			elementId: false,
+			element: null,
 			dataUrl: false,
-			win: window
+			win: window,
+			hideOrig: false
 		};
 		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
 
@@ -115,17 +121,14 @@
 				};
 				_img.setAttribute('src', _orig.getAttribute('href'));
 			} else {
-				_img.onload = function () {
-					_h = 32;
-					_w = 32;
-					_img.height = _h;
-					_img.width = _w;
-					_canvas.height = _h;
-					_canvas.width = _w;
-					_context = _canvas.getContext('2d');
-					icon.ready();
-				};
-				_img.setAttribute('src', '');
+				_h = 32;
+				_w = 32;
+				_img.height = _h;
+				_img.width = _w;
+				_canvas.height = _h;
+				_canvas.width = _w;
+				_context = _canvas.getContext('2d');
+				icon.ready();
 			}
 
 		};
