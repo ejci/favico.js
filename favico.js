@@ -22,8 +22,7 @@
  *    elementId: false,
  *    element: null,
  *    dataUrl: function(url){},
- *    win: window,
- *    hideOrig: false
+ *    win: window
  * });
  */
 (function () {
@@ -42,8 +41,7 @@
 			elementId: false,
 			element: null,
 			dataUrl: false,
-			win: window,
-			hideOrig: false
+			win: window
 		};
 		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
 
