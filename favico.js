@@ -2,6 +2,7 @@
  * @license MIT or GPL-2.0
  * @fileOverview Favico animations
  * @author Miroslav Magda, http://blog.ejci.net
+ * @source: https://github.com/ejci/favico.js
  * @version 0.3.10
  */
 
@@ -15,11 +16,13 @@
  *    textColor : '#fff',
  *    fontFamily : 'sans-serif',
  *    fontStyle : 'bold',
- *    position : 'down',
  *    type : 'circle',
+ *    position : 'down',
  *    animation : 'slide',
+ *    elementId: false,
+ *    element: null,
  *    dataUrl: function(url){},
- *    win: top
+ *    win: window
  * });
  */
 (function () {
@@ -36,6 +39,7 @@
 			position: 'down', // down, up, left, leftup (upleft)
 			animation: 'slide',
 			elementId: false,
+			element: null,
 			dataUrl: false,
 			win: window
 		};
@@ -115,17 +119,14 @@
 				};
 				_img.setAttribute('src', _orig.getAttribute('href'));
 			} else {
-				_img.onload = function () {
-					_h = 32;
-					_w = 32;
-					_img.height = _h;
-					_img.width = _w;
-					_canvas.height = _h;
-					_canvas.width = _w;
-					_context = _canvas.getContext('2d');
-					icon.ready();
-				};
-				_img.setAttribute('src', '');
+				_h = 32;
+				_w = 32;
+				_img.height = _h;
+				_img.width = _w;
+				_canvas.height = _h;
+				_canvas.width = _w;
+				_context = _canvas.getContext('2d');
+				icon.ready();
 			}
 
 		};
