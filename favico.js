@@ -844,7 +844,7 @@
 
 	// AMD / RequireJS
 	if (typeof define !== 'undefined' && define.amd) {
-		define([], function () {
+		define('favico', [], function () {
 			return Favico;
 		});
 	}
