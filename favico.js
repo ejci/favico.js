@@ -373,6 +373,17 @@
 			}
 		};
 		/**
+		 * Set the icon from a source url. Won't work with badges.
+		 */
+		var rawImageSrc = function (url) {
+			_readyCb = function() {
+				link.setIconSrc(url);
+			};
+			if (_ready) {
+				_readyCb();
+			}
+		};
+		/**
 		 * Set video as icon
 		 */
 		var video = function (videoElement) {
@@ -500,6 +511,9 @@
 		};
 		link.setIcon = function (canvas) {
 			var url = canvas.toDataURL('image/png');
+			link.setIconSrc(url);
+		};
+		link.setIconSrc = function (url) {
 			if (_opt.dataUrl) {
 				//if using custom exporter
 				_opt.dataUrl(url);
@@ -834,6 +848,7 @@
 			badge: badge,
 			video: video,
 			image: image,
+			rawImageSrc: rawImageSrc,
 			webcam: webcam,
 			reset: icon.reset,
 			browser: {
