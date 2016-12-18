@@ -73,3 +73,11 @@ All code is open source and dual licensed under GPL and MIT. Check the individua
 
 #### 0.1.0
 * proof of concept
+
+## Browser support
+* Chrome: Yes
+* Firefox: Yes
+* Opera: Yes
+* IE: No
+* Edge: No
+* Safari: No (Safari hides favicons)
