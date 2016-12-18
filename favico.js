@@ -853,17 +853,19 @@
 			cb = (cb) ? cb : function () {
 			};
 			if ((step < animationType.length) && (step >= 0)) {
-				type[_opt.type](merge(opt, animationType[step]));
-				_animTimeout = setTimeout(function () {
-					if (revert) {
-						step = step - 1;
-					} else {
-						step = step + 1;
-					}
-					animation.run(opt, cb, revert, step);
-				}, animation.duration);
-
-				link.setIcon(_canvas);
+				var doStep = function() {
+					type[_opt.type](merge(opt, animationType[step]));
+					_animTimeout = setTimeout(function () {
+						if (revert) {
+							step = step - 1;
+						} else {
+							step = step + 1;
+						}
+						animation.run(opt, cb, revert, step);
+					}, animation.duration);
+					link.setIcon(_canvas);
+				}
+				window.requestAnimationFrame(doStep);
 			} else {
 				cb();
 				return;
