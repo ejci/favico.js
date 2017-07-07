@@ -43,7 +43,7 @@
 			dataUrl: false,
 			win: window
 		};
-		var _opt, _orig, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
+		var _opt, _orig, _origSrc, _h, _w, _canvas, _context, _img, _ready, _lastBadge, _running, _readyCb, _stop, _browser, _animTimeout, _drawTimeout, _doc;
 
 		_browser = {};
 		_browser.ff = typeof InstallTrigger != 'undefined';
@@ -108,6 +108,7 @@
 			_img = document.createElement('img');
 			var lastIcon = _orig[_orig.length - 1];
 			if (lastIcon.hasAttribute('href')) {
+				_origSrc = lastIcon.getAttribute('href');
 				_img.setAttribute('crossOrigin', 'anonymous');
 				//get width/height
 				_img.onload = function () {
@@ -157,7 +158,13 @@
 			_context.clearRect(0, 0, _w, _h);
 			_context.drawImage(_img, 0, 0, _w, _h);
 			//_stop=true;
-			link.setIcon(_canvas);
+			if (_opt.dataUrl || !_origSrc) {
+				link.setIcon(_canvas);
+			}
+			else {
+				// reset original image if availible
+				link.setIconSrc(_origSrc);
+			}
 			//webcam('stop');
 			//video('stop');
 			window.clearTimeout(_animTimeout);
