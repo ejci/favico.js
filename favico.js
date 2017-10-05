@@ -136,7 +136,7 @@
 		 */
 		var icon = {};
 		/**
-		 * Icon is ready (reset icon) and start animation (if ther is any)
+		 * Icon is ready (reset icon) and start animation (if there is any)
 		 */
 		icon.ready = function () {
 			_ready = true;
@@ -176,8 +176,6 @@
 				if (_queue.length > 0) {
 					_queue.shift();
 					icon.start();
-				} else {
-
 				}
 			};
 			if (_queue.length > 0) {
@@ -207,6 +205,11 @@
 		 * Badge types
 		 */
 		var type = {};
+    /**
+     * Process Options
+     * @param {object} opt - Badge Options
+     * @returns {object} Processed Badge Options
+     */
 		var options = function (opt) {
 			opt.n = ((typeof opt.n) === 'number') ? Math.abs(opt.n | 0) : opt.n;
 			opt.x = _w * opt.x;
@@ -218,7 +221,7 @@
 		};
 		/**
 		 * Generate circle
-		 * @param {Object} opt Badge options
+		 * @param {object} opt - Badge Options
 		 */
 		type.circle = function (opt) {
 			opt = options(opt);
@@ -266,7 +269,7 @@
 		};
 		/**
 		 * Generate rectangle
-		 * @param {Object} opt Badge options
+		 * @param {object} opt - Badge Options
 		 */
 		type.rectangle = function (opt) {
 			opt = options(opt);
@@ -299,6 +302,8 @@
 
 		/**
 		 * Set badge
+     * @param {integer|string} number - Value to show in Badge
+     * @param {object} opts - Badge Options
 		 */
 		var badge = function (number, opts) {
 			opts = ((typeof opts) === 'string' ? {
@@ -348,6 +353,7 @@
 
 		/**
 		 * Set image as icon
+     * @param {HTMLElement} imageElement - Image Element in Page
 		 */
 		var image = function (imageElement) {
 			_readyCb = function () {
@@ -375,6 +381,7 @@
 		};
 		/**
 		 * Set the icon from a source url. Won't work with badges.
+     * @param {string} url - URL of the Image
 		 */
 		var rawImageSrc = function (url) {
 			_readyCb = function() {
@@ -386,6 +393,7 @@
 		};
 		/**
 		 * Set video as icon
+     * @param {HTMLElement} Video Element in Page
 		 */
 		var video = function (videoElement) {
 			_readyCb = function () {
@@ -412,7 +420,8 @@
 			}
 		};
 		/**
-		 * Set video as icon
+		 * Set webcam as icon
+     * @param {string} [action] - "stop" to end {optional}
 		 */
 		var webcam = function (action) {
 			//UR
@@ -455,7 +464,11 @@
 			}
 
 		};
-
+    /**
+     * Set Option
+     * @param {string} key - Option Key
+     * @param {*} value - Option Value
+     */
 		var setOpt = function (key, value) {
 			var opts = key;
 			if (!(value == null && Object.prototype.toString.call(key) == '[object Object]')) {
@@ -478,6 +491,7 @@
 
 		/**
 		 * Draw video to context and repeat :)
+     * @param {HTMLElement} video - Video Element in Page
 		 */
 		function drawVideo(video) {
 			if (video.paused || video.ended || _stop) {
@@ -499,6 +513,7 @@
 		var link = {};
 		/**
 		 * Get icons from HEAD tag or create a new <link> element
+     * @returns {array} Array of HTMLElements (img) for icon images
 		 */
 		link.getIcons = function () {
 			var elms = [];
@@ -533,11 +548,19 @@
 			});
 			return elms;
 		};
-		link.setIcon = function (canvas) {
+		/**
+		 * Set icon link src to contents of HTMLElement (canvas)
+     * @param {HTMLElement} canvas - HTMLElements (canvas) to set Link Src to
+		 */
+    link.setIcon = function (canvas) {
 			var url = canvas.toDataURL('image/png');
 			link.setIconSrc(url);
 		};
-		link.setIconSrc = function (url) {
+		/**
+		 * Set icon link src to image identified by URL
+     * @param {string} url - The URL to set the icon Link Src to
+		 */
+    link.setIconSrc = function (url) {
 			if (_opt.dataUrl) {
 				//if using custom exporter
 				_opt.dataUrl(url);
@@ -577,8 +600,11 @@
 			}
 		};
 
-		//http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#answer-5624139
-		//HEX to RGB convertor
+		/**
+		 * Convert Hex RGB Color into Decimal RGB values
+     * http://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb#answer-5624139
+     * @param {String} Hex RGB Color
+		 */
 		function hexToRgb(hex) {
 			var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
 			hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -594,6 +620,9 @@
 
 		/**
 		 * Merge options
+     * @param {object} def - Default Options
+     * @param {object} opt - Badge Options
+     * @returns {object} Merged Options
 		 */
 		function merge(def, opt) {
 			var mergedOpt = {};
@@ -610,6 +639,7 @@
 		/**
 		 * Cross-browser page visibility shim
 		 * http://stackoverflow.com/questions/12536562/detect-whether-a-window-is-visible
+     * @returns {boolean} True if Window/Page is not visible
 		 */
 		function isPageHidden() {
 			return _doc.hidden || _doc.msHidden || _doc.webkitHidden || _doc.mozHidden;
@@ -628,12 +658,12 @@
 		 */
 		animation.types = {};
 		animation.types.fade = [{
-			x: 0.4,
-			y: 0.4,
-			w: 0.6,
-			h: 0.6,
-			o: 0.0
-		}, {
+				x: 0.4,
+				y: 0.4,
+				w: 0.6,
+				h: 0.6,
+				o: 0.0
+			}, {
 				x: 0.4,
 				y: 0.4,
 				w: 0.6,
@@ -695,19 +725,19 @@
 				o: 1.0
 			}];
 		animation.types.none = [{
-			x: 0.4,
-			y: 0.4,
-			w: 0.6,
-			h: 0.6,
-			o: 1
-		}];
+				x: 0.4,
+				y: 0.4,
+				w: 0.6,
+				h: 0.6,
+				o: 1
+			}];
 		animation.types.pop = [{
-			x: 1,
-			y: 1,
-			w: 0,
-			h: 0,
-			o: 1
-		}, {
+				x: 1,
+				y: 1,
+				w: 0,
+				h: 0,
+				o: 1
+			}, {
 				x: 0.9,
 				y: 0.9,
 				w: 0.1,
@@ -838,10 +868,11 @@
 			}];
 		/**
 		 * Run animation
-		 * @param {Object} opt Animation options
-		 * @param {Object} cb Callabak after all steps are done
-		 * @param {Object} revert Reverse order? true|false
-		 * @param {Object} step Optional step number (frame bumber)
+		 * @param {object} opt - Animation options
+		 * @param {object} cb - Callback after all steps are done
+		 * @param {boolean} revert - Reverse order?
+		 * @param {object} [step] - Step number (frame number)
+     * @returns {object} Badge Object
 		 */
 		animation.run = function (opt, cb, revert, step) {
 			var animationType = animation.types[isPageHidden() ? 'none' : _opt.animation];
